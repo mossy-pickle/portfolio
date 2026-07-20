@@ -612,6 +612,101 @@ img { max-width: 100%; display: block; }
 }
 
 /* ============================================================
+   SLIDE VIEWER (modal deck player)
+   ============================================================ */
+.slide-viewer {
+  position: fixed;
+  inset: 0;
+  background: rgba(26,31,23,0.94);
+  z-index: 300;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.slide-viewer.open { display: flex; }
+
+.slide-viewer img {
+  max-width: min(92vw, 1200px);
+  max-height: 80vh;
+  border-radius: 8px;
+  box-shadow: 0 20px 70px rgba(0,0,0,0.6);
+  background: #fff;
+}
+
+.slide-viewer-controls {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.slide-btn {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 2px solid var(--accent2);
+  background: transparent;
+  color: var(--lichen);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s;
+}
+
+.slide-btn:hover {
+  background: var(--accent2);
+  color: #37412f;
+}
+
+.slide-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.slide-btn:disabled:hover {
+  background: transparent;
+  color: var(--lichen);
+}
+
+.slide-counter {
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
+  min-width: 64px;
+  text-align: center;
+}
+
+.slide-close {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.5rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.slide-close:hover {
+  border-color: var(--lichen);
+  color: var(--lichen);
+}
+
+.slide-hint {
+  color: var(--muted);
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+/* ============================================================
    FOOTER
    ============================================================ */
 .footer {

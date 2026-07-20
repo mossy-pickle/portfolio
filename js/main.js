@@ -1,3 +1,77 @@
+/* ============================================================
+   Slide viewer — opens a modal deck player.
+   Trigger: <a class="view-deck" data-deck="assets/projects/slides/mds" data-count="23">
+   ============================================================ */
+(function () {
+  var triggers = document.querySelectorAll('.view-deck');
+  if (!triggers.length) return;
+
+  /* Build the modal once */
+  var viewer = document.createElement('div');
+  viewer.className = 'slide-viewer';
+  viewer.innerHTML =
+    '<button class="slide-close" title="Close (Esc)">&#10005;</button>' +
+    '<img alt="Slide" />' +
+    '<div class="slide-viewer-controls">' +
+    '  <button class="slide-btn prev" title="Previous (&#8592;)">&#8592;</button>' +
+    '  <span class="slide-counter"></span>' +
+    '  <button class="slide-btn next" title="Next (&#8594;)">&#8594;</button>' +
+    '</div>' +
+    '<span class="slide-hint">Use arrow keys to navigate &middot; Esc to close</span>';
+  document.body.appendChild(viewer);
+
+  var img     = viewer.querySelector('img');
+  var counter = viewer.querySelector('.slide-counter');
+  var prevBtn = viewer.querySelector('.prev');
+  var nextBtn = viewer.querySelector('.next');
+
+  var deck = '', count = 0, idx = 0;
+
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+
+  function show(i) {
+    idx = Math.max(1, Math.min(count, i));
+    img.src = deck + '/slide-' + pad(idx) + '.png';
+    counter.textContent = idx + ' / ' + count;
+    prevBtn.disabled = idx === 1;
+    nextBtn.disabled = idx === count;
+    /* Preload neighbors */
+    if (idx < count) { (new Image()).src = deck + '/slide-' + pad(idx + 1) + '.png'; }
+    if (idx > 1)     { (new Image()).src = deck + '/slide-' + pad(idx - 1) + '.png'; }
+  }
+
+  function open(d, c) {
+    deck = d; count = c;
+    viewer.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    show(1);
+  }
+
+  function close() {
+    viewer.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  triggers.forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      open(a.dataset.deck, parseInt(a.dataset.count, 10));
+    });
+  });
+
+  prevBtn.addEventListener('click', function () { show(idx - 1); });
+  nextBtn.addEventListener('click', function () { show(idx + 1); });
+  viewer.querySelector('.slide-close').addEventListener('click', close);
+  viewer.addEventListener('click', function (e) { if (e.target === viewer) close(); });
+
+  document.addEventListener('keydown', function (e) {
+    if (!viewer.classList.contains('open')) return;
+    if (e.key === 'Escape')     close();
+    if (e.key === 'ArrowLeft')  show(idx - 1);
+    if (e.key === 'ArrowRight') show(idx + 1);
+  });
+})();
+
 /* Active nav link */
 (function () {
   var current = window.location.pathname.split('/').pop() || 'index.html';
