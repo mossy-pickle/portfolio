@@ -13,20 +13,24 @@
   --wood:      #b08968;   /* light wood */
   --wood-dark: #5e4326;   /* bark brown */
   --wood-ring: #9c6644;   /* ring brown */
+  --cedar:     #c9804e;   /* cedar plank — primary wood accent */
+  --redwood:   #9e5a38;   /* redwood heartwood */
+  --ember:     #f2ba8b;   /* sanded cedar / warm ember text */
   --text:      #eef0e4;   /* warm off-white */
   --muted:     #c6cfb6;   /* muted sage — 4.5:1+ on bg */
   --firefly:   #ffe08a;   /* firefly yellow */
   --radius:    12px;
   --nav-h:     64px;
-  --font-display: 'Lora', Georgia, serif;
-  --font-body: 'Inter', system-ui, sans-serif;
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Hanken Grotesk', system-ui, sans-serif;
+  --font-mono: 'Spline Sans Mono', ui-monospace, 'Cascadia Mono', monospace;
   --ease: cubic-bezier(0.25, 0.6, 0.35, 1);
 }
 
 /* Selection + focus: part of the identity, not browser defaults */
 ::selection {
-  background: var(--lichen);
-  color: #37412f;
+  background: var(--ember);
+  color: #38220f;
 }
 
 :focus-visible {
@@ -75,6 +79,28 @@ html { scroll-behavior: smooth; }
    (unsupported browser, or the transition was skipped) */
 html.page-fade .page { animation: page-enter 460ms var(--ease) both; }
 
+/* Inner-page content rises in a beat behind the header */
+html.page-fade .project-row,
+html.page-fade .resume-section,
+html.page-fade .illus-item,
+html.page-fade .github-hero {
+  animation: page-enter 500ms var(--ease) both;
+}
+html.page-fade .project-row:nth-child(1),
+html.page-fade .resume-section:nth-of-type(1),
+html.page-fade .illus-item:nth-child(1) { animation-delay: 0.08s; }
+html.page-fade .project-row:nth-child(2),
+html.page-fade .resume-section:nth-of-type(2),
+html.page-fade .illus-item:nth-child(2) { animation-delay: 0.15s; }
+html.page-fade .project-row:nth-child(3),
+html.page-fade .resume-section:nth-of-type(3),
+html.page-fade .illus-item:nth-child(3) { animation-delay: 0.22s; }
+html.page-fade .project-row:nth-child(4),
+html.page-fade .resume-section:nth-of-type(4),
+html.page-fade .illus-item:nth-child(4) { animation-delay: 0.29s; }
+html.page-fade .project-row:nth-child(n+5),
+html.page-fade .illus-item:nth-child(n+5) { animation-delay: 0.36s; }
+
 @keyframes page-enter {
   from { opacity: 0; transform: translateY(14px); }
 }
@@ -93,7 +119,8 @@ body {
   background-image:
     radial-gradient(ellipse 70% 55% at 15% 5%, rgba(212,219,178,0.10) 0%, transparent 60%),
     radial-gradient(ellipse 60% 45% at 88% 95%, rgba(163,177,138,0.14) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 30% at 70% 20%, rgba(194,207,159,0.07) 0%, transparent 65%);
+    radial-gradient(ellipse 40% 30% at 70% 20%, rgba(194,207,159,0.07) 0%, transparent 65%),
+    radial-gradient(ellipse 55% 40% at 8% 88%, rgba(201,128,78,0.10) 0%, transparent 60%);
   color: var(--text);
   font-family: var(--font-body);
   font-size: 16px;
@@ -125,13 +152,14 @@ img { max-width: 100%; display: block; }
 
 .nav-logo {
   font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 1.15rem;
-  letter-spacing: 0.02em;
-  color: var(--lichen);
+  font-weight: 700;
+  font-style: italic;
+  font-size: 1.25rem;
+  letter-spacing: 0.01em;
+  color: var(--ember);
 }
 
-.nav-logo:hover { color: var(--accent); }
+.nav-logo:hover { color: var(--lichen); }
 
 .nav-links {
   display: flex;
@@ -141,16 +169,16 @@ img { max-width: 100%; display: block; }
 
 .nav-links a {
   color: var(--muted);
-  font-size: 0.9rem;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
   font-weight: 500;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   transition: color 0.2s;
 }
 
-.nav-links a:hover,
-.nav-links a.active {
-  color: var(--text);
-}
+.nav-links a:hover { color: var(--text); }
+.nav-links a.active { color: var(--ember); }
 
 /* ============================================================
    PAGE WRAPPER
@@ -213,14 +241,14 @@ img { max-width: 100%; display: block; }
   overflow: hidden;
   border: 4px solid var(--border);
   box-shadow:
-    0 0 0 8px rgba(212,219,178,0.08),
+    0 0 0 8px rgba(242,186,139,0.10),
     0 16px 50px rgba(30,38,26,0.5);
   transition: box-shadow 0.3s;
 }
 
 .stage-photo:hover {
   box-shadow:
-    0 0 0 8px rgba(212,219,178,0.16),
+    0 0 0 8px rgba(242,186,139,0.2),
     0 20px 60px rgba(30,38,26,0.6);
 }
 
@@ -252,13 +280,23 @@ img { max-width: 100%; display: block; }
   background: var(--surface);
   border: 2px solid var(--border);
   color: var(--muted);
-  font-size: 0.62rem;
-  font-weight: 700;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   z-index: 2;
   box-shadow: 0 6px 18px rgba(30,38,26,0.35);
   transition: border-color 0.25s, color 0.25s, transform 0.25s, box-shadow 0.25s, background 0.25s;
+  /* trail markers swing in from above, staggered left → right */
+  animation: node-swing-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes node-swing-in {
+  0%   { opacity: 0; transform: translate(-50%, -170%) rotate(-30deg) scale(0.4); }
+  55%  { opacity: 1; transform: translate(-50%, -44%)  rotate(9deg)   scale(1.07); }
+  76%  { transform: translate(-50%, -53%) rotate(-4deg) scale(0.97); }
+  100% { transform: translate(-50%, -50%) rotate(0deg)  scale(1); }
 }
 
 /* Arc along the bottom half of the photo, left → right:
@@ -266,17 +304,17 @@ img { max-width: 100%; display: block; }
    (angles from center, y-down; radius ~46% of stage) */
 .compass-node { transform: translate(-50%, -50%); }
 
-.compass-node.n { left: 10.2%; top: 73%;   }  /* Resume      (150°) */
-.compass-node.e { left: 34.3%; top: 93.2%; }  /* Projects    (110°) */
-.compass-node.s { left: 65.7%; top: 93.2%; }  /* Illustration (70°) */
-.compass-node.w { left: 89.8%; top: 73%;   }  /* GitHub       (30°) */
+.compass-node.n { left: 10.2%; top: 73%;   animation-delay: 0.25s; }  /* Resume      (150°) */
+.compass-node.e { left: 34.3%; top: 93.2%; animation-delay: 0.4s;  }  /* Projects    (110°) */
+.compass-node.s { left: 65.7%; top: 93.2%; animation-delay: 0.55s; }  /* Illustration (70°) */
+.compass-node.w { left: 89.8%; top: 73%;   animation-delay: 0.7s;  }  /* GitHub       (30°) */
 
 .compass-node:hover {
-  border-color: var(--firefly);
-  color: var(--lichen);
+  border-color: var(--ember);
+  color: var(--ember);
   background: #5e6b56;
-  box-shadow: 0 0 22px rgba(255,224,138,0.35);
-  transform: translate(-50%, -50%) scale(1.1);
+  box-shadow: 0 0 26px rgba(242,186,139,0.4);
+  transform: translate(-50%, -50%) scale(1.12) rotate(-3deg);
 }
 
 .compass-node svg { flex-shrink: 0; }
@@ -440,24 +478,26 @@ img { max-width: 100%; display: block; }
 
 .bio-name {
   font-family: var(--font-display);
-  font-size: clamp(3rem, 7.5vw, 5.4rem);
-  font-weight: 700;
-  line-height: 1.02;
-  letter-spacing: -0.02em;
-  margin-bottom: 0.7rem;
+  font-size: clamp(3.4rem, 8.5vw, 6.4rem);
+  font-weight: 900;
+  font-style: italic;
+  line-height: 0.96;
+  letter-spacing: -0.015em;
+  margin-bottom: 0.9rem;
   /* semi-transparent fill lets the mountain backdrop show through;
-     the faint lichen stroke keeps the edges crisp */
-  color: rgba(238, 240, 228, 0.45);
-  -webkit-text-stroke: 1.5px rgba(212, 219, 178, 0.55);
+     the warm cedar stroke keeps the letterforms crisp */
+  color: rgba(238, 240, 228, 0.38);
+  -webkit-text-stroke: 2px rgba(242, 186, 139, 0.65);
   paint-order: stroke fill;
-  text-shadow: 0 2px 28px rgba(30, 38, 26, 0.4);
+  text-shadow: 0 4px 34px rgba(30, 38, 26, 0.5);
 }
 
 .bio-title {
-  font-size: 0.95rem;
-  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--ember);
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   margin-bottom: 1.2rem;
 }
@@ -474,7 +514,7 @@ img { max-width: 100%; display: block; }
 }
 
 .bio-location svg { color: var(--accent2); flex-shrink: 0; }
-.bio-location .arrow { color: var(--lichen); font-weight: 700; }
+.bio-location .arrow { color: var(--ember); font-weight: 700; }
 
 .bio-text {
   color: var(--muted);
@@ -489,8 +529,8 @@ img { max-width: 100%; display: block; }
   gap: 0.5rem;
   padding: 0.75rem 1.7rem;
   border-radius: 999px;
-  background: linear-gradient(135deg, var(--accent2), var(--lichen));
-  color: #37412f;
+  background: linear-gradient(135deg, var(--cedar), var(--ember));
+  color: #38220f;
   font-weight: 700;
   font-size: 0.9rem;
   box-shadow: 0 4px 14px rgba(30,38,26,0.35);
@@ -500,8 +540,58 @@ img { max-width: 100%; display: block; }
 .bio-cta:hover {
   opacity: 0.95;
   transform: translateY(-2px);
-  box-shadow: 0 8px 22px rgba(30,38,26,0.4);
-  color: #37412f;
+  box-shadow: 0 8px 26px rgba(201,128,78,0.35);
+  color: #38220f;
+}
+
+/* ============================================================
+   LEAVE CHOREOGRAPHY
+   JS adds body.leaving (+ .chosen on the clicked link) before
+   navigating. On the home page the chosen marker flares while
+   the rest of the hero recedes; inner pages lift out quickly.
+   ============================================================ */
+body.leaving .compass-node {
+  animation: node-drop 0.45s cubic-bezier(0.5, 0, 0.75, 0.4) both;
+}
+body.leaving .compass-node.e { animation-delay: 0.05s; }
+body.leaving .compass-node.s { animation-delay: 0.1s; }
+body.leaving .compass-node.w { animation-delay: 0.15s; }
+
+body.leaving .compass-node.chosen {
+  animation: node-chosen 0.55s var(--ease) both;
+  z-index: 5;
+}
+
+body.leaving .stage-photo   { animation: photo-leave 0.5s var(--ease) 0.05s both; }
+body.leaving .bio           { animation: bio-leave 0.45s var(--ease) both; }
+body.leaving .hero-divider  { opacity: 0; transition: opacity 0.3s; }
+
+@keyframes node-drop {
+  to { opacity: 0; transform: translate(-50%, 40%) rotate(22deg) scale(0.75); }
+}
+
+@keyframes node-chosen {
+  40%  { opacity: 1; transform: translate(-50%, -50%) scale(1.3) rotate(3deg); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.9); }
+}
+
+@keyframes photo-leave {
+  to { opacity: 0; transform: translate(-50%, -50%) scale(0.88); }
+}
+
+@keyframes bio-leave {
+  to { opacity: 0; transform: translateY(18px); }
+}
+
+/* Inner pages: quick lift-out */
+body.leaving .page-header,
+body.leaving .container {
+  animation: page-leave 0.3s ease-in both;
+}
+body.leaving .container { animation-delay: 0.05s; }
+
+@keyframes page-leave {
+  to { opacity: 0; transform: translateY(-16px); }
 }
 
 /* ============================================================
@@ -511,16 +601,17 @@ img { max-width: 100%; display: block; }
   padding: 4rem 2rem 2rem;
   max-width: 900px;
   margin: 0 auto;
-  border-bottom: 2px solid var(--border);
+  border-bottom: 2px solid rgba(176,137,104,0.4);
   margin-bottom: 3rem;
 }
 
 .page-header h1 {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 5vw, 3rem);
-  font-weight: 600;
+  font-size: clamp(2.4rem, 5.5vw, 3.4rem);
+  font-weight: 900;
+  font-style: italic;
   letter-spacing: -0.01em;
-  color: var(--lichen);
+  color: var(--ember);
 }
 
 .page-header p {
@@ -544,13 +635,14 @@ img { max-width: 100%; display: block; }
 .resume-section { margin-bottom: 3rem; }
 
 .resume-section h2 {
-  font-size: 0.8rem;
-  letter-spacing: 0.12em;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--ember);
   margin-bottom: 1.2rem;
   padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid rgba(176,137,104,0.45);
 }
 
 .resume-item {
@@ -570,9 +662,9 @@ img { max-width: 100%; display: block; }
   align-items: center;
   gap: 0.5rem;
   padding: 0.65rem 1.4rem;
-  border: 2px solid var(--accent);
+  border: 2px solid var(--cedar);
   border-radius: 999px;
-  color: var(--accent);
+  color: var(--ember);
   font-size: 0.88rem;
   font-weight: 600;
   transition: background 0.2s, color 0.2s;
@@ -580,8 +672,8 @@ img { max-width: 100%; display: block; }
 }
 
 .resume-download:hover {
-  background: var(--accent);
-  color: #fff;
+  background: var(--cedar);
+  color: #2b1c10;
 }
 
 /* ============================================================
@@ -603,7 +695,7 @@ img { max-width: 100%; display: block; }
 }
 
 .project-row:hover {
-  border-color: var(--accent2);
+  border-color: var(--cedar);
   transform: translateY(-2px);
   box-shadow: 0 8px 26px rgba(30,38,26,0.3);
 }
@@ -619,9 +711,9 @@ img { max-width: 100%; display: block; }
 
 .project-row-head h3 {
   font-family: var(--font-display);
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: var(--lichen);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--ember);
 }
 
 .project-overview {
@@ -642,17 +734,17 @@ img { max-width: 100%; display: block; }
   align-items: center;
   gap: 0.5rem;
   padding: 0.55rem 1.3rem;
-  border: 2px solid var(--accent2);
+  border: 2px solid var(--cedar);
   border-radius: 999px;
-  color: var(--accent);
+  color: var(--ember);
   font-size: 0.85rem;
   font-weight: 600;
   transition: background 0.2s, color 0.2s;
 }
 
 .doc-btn:hover {
-  background: var(--accent2);
-  color: #37412f;
+  background: var(--cedar);
+  color: #2b1c10;
 }
 
 .projects-grid {
@@ -671,9 +763,9 @@ img { max-width: 100%; display: block; }
 }
 
 .project-card:hover {
-  border-color: var(--accent2);
+  border-color: var(--cedar);
   transform: translateY(-3px);
-  box-shadow: 0 10px 30px rgba(74,124,89,0.18);
+  box-shadow: 0 10px 30px rgba(158,90,56,0.22);
 }
 
 .project-thumb {
@@ -694,12 +786,14 @@ img { max-width: 100%; display: block; }
 .project-body p { color: var(--muted); font-size: 0.875rem; line-height: 1.6; }
 .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.8rem; }
 .tag {
-  font-size: 0.7rem;
-  padding: 0.2rem 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.02em;
+  padding: 0.22rem 0.65rem;
   border-radius: 999px;
-  background: rgba(212,219,178,0.16);
-  color: var(--lichen);
-  font-weight: 600;
+  background: rgba(201,128,78,0.2);
+  color: #f5d3ae;
+  font-weight: 500;
 }
 
 /* ============================================================
@@ -723,7 +817,7 @@ img { max-width: 100%; display: block; }
 }
 
 .illus-item:hover {
-  border-color: var(--accent2);
+  border-color: var(--cedar);
   transform: scale(1.01);
 }
 
@@ -776,8 +870,8 @@ img { max-width: 100%; display: block; }
 }
 
 .github-btn:hover {
-  border-color: var(--accent);
-  background: rgba(123,160,91,0.12);
+  border-color: var(--cedar);
+  background: rgba(201,128,78,0.14);
   color: var(--text);
 }
 
@@ -884,7 +978,9 @@ img { max-width: 100%; display: block; }
   padding: 2rem;
   text-align: center;
   color: var(--muted);
-  font-size: 0.8rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
 }
 
 /* ============================================================

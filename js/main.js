@@ -15,6 +15,44 @@
 })();
 
 /* ============================================================
+   Leave choreography — intercept same-site link clicks, play
+   the exit animation (style.css: body.leaving), then navigate.
+   On the home page the clicked compass marker flares while the
+   rest of the hero recedes; inner pages lift out quickly.
+   ============================================================ */
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  document.addEventListener('click', function (e) {
+    if (e.defaultPrevented || e.button !== 0 ||
+        e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+
+    var a = e.target.closest ? e.target.closest('a[href]') : null;
+    if (!a || a.origin !== location.origin) return;
+    if (a.hasAttribute('download') || a.target === '_blank' ||
+        a.classList.contains('view-deck')) return;
+
+    var href = a.getAttribute('href');
+    if (!href || href.charAt(0) === '#') return;
+    if (reduce.matches || document.body.classList.contains('leaving')) return;
+
+    e.preventDefault();
+    document.body.classList.add('leaving');
+    a.classList.add('chosen');
+
+    var isHome = !!document.querySelector('.hero');
+    setTimeout(function () { location.href = a.href; }, isHome ? 620 : 320);
+  });
+
+  /* Back/forward-cache restore: never come back frozen mid-exit */
+  window.addEventListener('pageshow', function () {
+    document.body.classList.remove('leaving');
+    var chosen = document.querySelector('a.chosen');
+    if (chosen) chosen.classList.remove('chosen');
+  });
+})();
+
+/* ============================================================
    Slide viewer — opens a modal deck player.
    Trigger: <a class="view-deck" data-deck="assets/projects/slides/mds" data-count="23">
    ============================================================ */
