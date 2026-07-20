@@ -6,7 +6,7 @@
   });
 })();
 
-/* Neuron diagram */
+/* Neuron diagram — wood rounds connected by mossy dendrites */
 window.addEventListener('load', function () {
   var stage  = document.getElementById('neuronStage');
   var canvas = document.getElementById('neuronCanvas');
@@ -15,7 +15,6 @@ window.addEventListener('load', function () {
   var ctx   = canvas.getContext('2d');
   var nodes = Array.from(stage.querySelectorAll('.neuron-node'));
 
-  /* Use the actual rendered size of the stage */
   var W = stage.offsetWidth;
   var H = stage.offsetHeight;
   canvas.width  = W;
@@ -24,11 +23,10 @@ window.addEventListener('load', function () {
   var cx = W / 2;
   var cy = H / 2;
 
-  /* Orbit radius = half the stage minus half an icon (64px) minus a small margin */
-  var iconSize = 64;
-  var r = W / 2 - iconSize / 2 - 20;
+  /* Sizes scale with the stage: icons ~18% of stage width */
+  var iconSize = Math.round(W * 0.18);
+  var r = W / 2 - iconSize / 2 - 8;
 
-  /* Position each node */
   var nodePositions = nodes.map(function (node) {
     var angleDeg = parseFloat(node.dataset.angle) || 0;
     var rad = angleDeg * Math.PI / 180;
@@ -41,14 +39,12 @@ window.addEventListener('load', function () {
     node.style.width  = iconSize + 'px';
     node.style.height = iconSize + 'px';
 
-    /* Bezier control point: perpendicular wobble */
     var cpx = cx + (x - cx) * 0.5 + (Math.random() - 0.5) * 50;
     var cpy = cy + (y - cy) * 0.5 + (Math.random() - 0.5) * 50;
 
     return { x: x, y: y, cpx: cpx, cpy: cpy };
   });
 
-  /* Animated pulses */
   var t = 0;
 
   function bezierPt(x1, y1, cpx, cpy, x2, y2, p) {
@@ -63,39 +59,39 @@ window.addEventListener('load', function () {
     ctx.clearRect(0, 0, W, H);
 
     nodePositions.forEach(function (np, i) {
-      /* Static dendrite line */
+      /* Static dendrite — vine-like brown-green */
       ctx.beginPath();
       ctx.moveTo(cx, cy);
       ctx.quadraticCurveTo(np.cpx, np.cpy, np.x, np.y);
-      ctx.strokeStyle = 'rgba(124,106,255,0.15)';
-      ctx.lineWidth = 1.2;
+      ctx.strokeStyle = 'rgba(127,85,57,0.3)';
+      ctx.lineWidth = 2;
       ctx.stroke();
 
-      /* Traveling pulse — each offset by 1/4 turn */
+      /* Traveling pulse — mossy green firefly */
       var p = (t * 0.35 + i * 0.25) % 1;
       var pt = bezierPt(cx, cy, np.cpx, np.cpy, np.x, np.y, p);
 
-      var grd = ctx.createRadialGradient(pt.x, pt.y, 0, pt.x, pt.y, 16);
-      grd.addColorStop(0,   'rgba(192,132,252,0.6)');
-      grd.addColorStop(0.5, 'rgba(124,106,255,0.2)');
-      grd.addColorStop(1,   'rgba(124,106,255,0)');
+      var grd = ctx.createRadialGradient(pt.x, pt.y, 0, pt.x, pt.y, 18);
+      grd.addColorStop(0,   'rgba(123,160,91,0.65)');
+      grd.addColorStop(0.5, 'rgba(74,124,89,0.25)');
+      grd.addColorStop(1,   'rgba(74,124,89,0)');
       ctx.beginPath();
-      ctx.arc(pt.x, pt.y, 16, 0, Math.PI * 2);
+      ctx.arc(pt.x, pt.y, 18, 0, Math.PI * 2);
       ctx.fillStyle = grd;
       ctx.fill();
 
       ctx.beginPath();
-      ctx.arc(pt.x, pt.y, 2.5, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(230,210,255,0.95)';
+      ctx.arc(pt.x, pt.y, 3, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(58,90,64,0.95)';
       ctx.fill();
     });
 
-    /* Center glow */
-    var cg = ctx.createRadialGradient(cx, cy, 0, cx, cy, 75);
-    cg.addColorStop(0, 'rgba(124,106,255,0.2)');
-    cg.addColorStop(1, 'rgba(124,106,255,0)');
+    /* Soft green glow behind the photo */
+    var cg = ctx.createRadialGradient(cx, cy, 0, cx, cy, W * 0.28);
+    cg.addColorStop(0, 'rgba(123,160,91,0.18)');
+    cg.addColorStop(1, 'rgba(123,160,91,0)');
     ctx.beginPath();
-    ctx.arc(cx, cy, 75, 0, Math.PI * 2);
+    ctx.arc(cx, cy, W * 0.28, 0, Math.PI * 2);
     ctx.fillStyle = cg;
     ctx.fill();
 
