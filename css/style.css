@@ -194,22 +194,23 @@ img { max-width: 100%; display: block; }
   transition: border-color 0.25s, color 0.25s, transform 0.25s, box-shadow 0.25s, background 0.25s;
 }
 
-.compass-node.n { top: 0;    left: 50%; transform: translateX(-50%); }
-.compass-node.e { right: 0;  top: 50%;  transform: translateY(-50%); }
-.compass-node.s { bottom: 0; left: 50%; transform: translateX(-50%); }
-.compass-node.w { left: 0;   top: 50%;  transform: translateY(-50%); }
+/* Arc along the bottom half of the photo, left → right:
+   Resume 150° · Projects 110° · Illustration 70° · GitHub 30°
+   (angles from center, y-down; radius ~46% of stage) */
+.compass-node { transform: translate(-50%, -50%); }
+
+.compass-node.n { left: 10.2%; top: 73%;   }  /* Resume      (150°) */
+.compass-node.e { left: 34.3%; top: 93.2%; }  /* Projects    (110°) */
+.compass-node.s { left: 65.7%; top: 93.2%; }  /* Illustration (70°) */
+.compass-node.w { left: 89.8%; top: 73%;   }  /* GitHub       (30°) */
 
 .compass-node:hover {
   border-color: var(--firefly);
   color: var(--lichen);
   background: #5e6b56;
   box-shadow: 0 0 22px rgba(255,224,138,0.35);
+  transform: translate(-50%, -50%) scale(1.1);
 }
-
-.compass-node.n:hover { transform: translateX(-50%) scale(1.1); }
-.compass-node.e:hover { transform: translateY(-50%) scale(1.1); }
-.compass-node.s:hover { transform: translateX(-50%) scale(1.1); }
-.compass-node.w:hover { transform: translateY(-50%) scale(1.1); }
 
 .compass-node svg { flex-shrink: 0; }
 .compass-node span { pointer-events: none; }
