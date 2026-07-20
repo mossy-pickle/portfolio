@@ -14,10 +14,33 @@
   --wood-dark: #5e4326;   /* bark brown */
   --wood-ring: #9c6644;   /* ring brown */
   --text:      #eef0e4;   /* warm off-white */
-  --muted:     #b9c2a9;   /* muted sage */
+  --muted:     #c6cfb6;   /* muted sage — 4.5:1+ on bg */
   --firefly:   #ffe08a;   /* firefly yellow */
   --radius:    12px;
   --nav-h:     64px;
+  --font-display: 'Lora', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --ease: cubic-bezier(0.25, 0.6, 0.35, 1);
+}
+
+/* Selection + focus: part of the identity, not browser defaults */
+::selection {
+  background: var(--lichen);
+  color: #37412f;
+}
+
+:focus-visible {
+  outline: 2px solid var(--firefly);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 html { scroll-behavior: smooth; }
@@ -30,10 +53,11 @@ body {
     radial-gradient(ellipse 60% 45% at 88% 95%, rgba(163,177,138,0.14) 0%, transparent 60%),
     radial-gradient(ellipse 40% 30% at 70% 20%, rgba(194,207,159,0.07) 0%, transparent 65%);
   color: var(--text);
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: var(--font-body);
   font-size: 16px;
   line-height: 1.6;
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
 }
 
 a { color: var(--accent); text-decoration: none; }
@@ -58,9 +82,10 @@ img { max-width: 100%; display: block; }
 }
 
 .nav-logo {
-  font-weight: 700;
-  font-size: 1.1rem;
-  letter-spacing: 0.04em;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.15rem;
+  letter-spacing: 0.02em;
   color: var(--lichen);
 }
 
@@ -372,10 +397,12 @@ img { max-width: 100%; display: block; }
 }
 
 .bio-name {
-  font-size: clamp(2rem, 4.5vw, 3rem);
-  font-weight: 700;
-  line-height: 1.15;
-  margin-bottom: 0.5rem;
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 5vw, 3.6rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.6rem;
   color: var(--text);
 }
 
@@ -442,8 +469,10 @@ img { max-width: 100%; display: block; }
 }
 
 .page-header h1 {
+  font-family: var(--font-display);
   font-size: clamp(2rem, 5vw, 3rem);
-  font-weight: 700;
+  font-weight: 600;
+  letter-spacing: -0.01em;
   color: var(--lichen);
 }
 
@@ -542,8 +571,9 @@ img { max-width: 100%; display: block; }
 }
 
 .project-row-head h3 {
-  font-size: 1.15rem;
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 600;
   color: var(--lichen);
 }
 
@@ -682,7 +712,7 @@ img { max-width: 100%; display: block; }
   background: var(--surface);
 }
 
-.github-hero h2 { font-size: 1.5rem; margin-bottom: 0.4rem; color: var(--text); }
+.github-hero h2 { font-family: var(--font-display); font-size: 1.6rem; font-weight: 600; margin-bottom: 0.4rem; color: var(--text); }
 .github-hero p { color: var(--muted); margin-bottom: 1.5rem; }
 
 .github-btn {
