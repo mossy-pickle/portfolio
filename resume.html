@@ -26,12 +26,11 @@
   <main class="page">
     <div class="page-header">
       <h1>Resume</h1>
-      <p>My background, education, and experience.</p>
+      <p>Owen Haber · Owen.Haber@tufts.edu · (425) 890-6926</p>
     </div>
 
     <div class="container">
 
-      <!-- Download button — swap href when you add a PDF -->
       <a class="resume-download" href="assets/resume.pdf" download>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
@@ -45,70 +44,96 @@
         <h2>Education</h2>
 
         <div class="resume-item">
-          <span class="resume-item-title">[University Name]</span>
-          <span class="resume-item-date">20XX – 20XX</span>
-          <span class="resume-item-sub">[Degree] in [Major]</span>
+          <span class="resume-item-title">Tufts University School of Engineering</span>
+          <span class="resume-item-date">Medford, MA</span>
+          <span class="resume-item-sub">Masters of Computer Science in Artificial Intelligence</span>
+          <span class="resume-item-date" style="grid-column:2;grid-row:3">Expected May 2027</span>
+          <span class="resume-item-sub" style="grid-column:1">Bachelor of Science in Data Science</span>
+          <span class="resume-item-date" style="grid-column:2">May 2026</span>
+          <p class="resume-item-desc">GPA: 3.37/4.0</p>
           <p class="resume-item-desc">
-            Relevant coursework: [Course 1], [Course 2], [Course 3].
-            GPA: [X.X]/4.0.
+            <strong style="color:var(--text);font-weight:600">Relevant Coursework:</strong>
+            Reinforcement Learning, Statistical Pattern Recognition, Advanced Artificial Intelligence,
+            Intro to Machine Learning, Deep Neural Networks, Numerical Aspects of Data Analysis,
+            Algorithms, Probability, Numerical Linear Algebra, Database Systems, Big Data,
+            Introduction to Security, Senior Capstone I/II, Engineering Leadership
           </p>
         </div>
-
       </section>
 
       <!-- Experience -->
       <section class="resume-section">
-        <h2>Experience</h2>
+        <h2>Professional Experience</h2>
 
         <div class="resume-item">
-          <span class="resume-item-title">[Job Title]</span>
-          <span class="resume-item-date">Month 20XX – Present</span>
-          <span class="resume-item-sub">[Company Name]</span>
-          <p class="resume-item-desc">
-            Describe what you did, the impact it had, and the technologies or skills involved.
-            Keep it to 1–3 sentences per role.
-          </p>
+          <span class="resume-item-title">flok Health <span style="font-weight:400;color:var(--muted)">(flok.org)</span></span>
+          <span class="resume-item-date">Montclair, NJ</span>
+          <span class="resume-item-sub">Data Science Intern, Product Insights and Analytics</span>
+          <span class="resume-item-date">May 2026 – Aug 2026</span>
+          <span class="resume-item-sub">Data Science Intern, Product Insights and Analytics</span>
+          <span class="resume-item-date">May 2025 – Aug 2025</span>
+          <span class="resume-item-sub">Data Analyst Intern, Biomedical Data Reporting</span>
+          <span class="resume-item-date">May 2024 – Jun 2024</span>
+          <ul class="resume-item-desc" style="padding-left:1.2rem;display:flex;flex-direction:column;gap:0.3rem">
+            <li>Designed and built app feature prototypes to present to prospective sponsors and partners.</li>
+            <li>Prototyped a community statistics dashboard to visualize aggregate health and engagement metrics.</li>
+            <li>Partnered with a front-end developer to design and write APIs powering interactive dashboard components.</li>
+            <li>Built and optimized data pipelines between multiple databases to automate data integration and analytics.</li>
+            <li>Presented research and prototype results to the rare disease community at a public seminar for impacted families.</li>
+            <li>Constructed basic reporting for the Flok app alpha release (Microsoft Fabric, Power BI).</li>
+          </ul>
         </div>
 
         <div class="resume-item">
-          <span class="resume-item-title">[Job Title]</span>
-          <span class="resume-item-date">Month 20XX – Month 20XX</span>
-          <span class="resume-item-sub">[Company Name]</span>
+          <span class="resume-item-title">YMCA Camp Belknap</span>
+          <span class="resume-item-date">Tuftonboro, NH</span>
+          <span class="resume-item-sub">Counselor, Kitchen Division</span>
+          <span class="resume-item-date">Jun 2021 – Aug 2024</span>
+          <ul class="resume-item-desc" style="padding-left:1.2rem;display:flex;flex-direction:column;gap:0.3rem">
+            <li>Managed large-scale camp events and activities for 100–200 campers under constant deadlines.</li>
+            <li>Selected for the leadership program after attending as a camper for eight years.</li>
+            <li>Demonstrated strong communication abilities while resolving conflicts in a professional manner.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Projects -->
+      <section class="resume-section">
+        <h2>Projects</h2>
+        <div class="resume-item">
+          <span class="resume-item-title">Predicting Amino Acid Content Based on Food Label</span>
+          <span class="resume-item-date">Senior Capstone</span>
           <p class="resume-item-desc">
-            Describe what you did, the impact it had, and the technologies or skills involved.
+            Designing and implementing a regression forest model to replace the current manual process for
+            phenylalanine value estimation of manufactured foods for people with rare metabolic disorders.
+            In collaboration with flok Health.
+            <a href="projects.html" style="margin-left:0.4rem">See all projects →</a>
           </p>
         </div>
-
       </section>
 
       <!-- Skills -->
       <section class="resume-section">
-        <h2>Skills</h2>
-        <div class="project-tags" style="margin-top:0.4rem">
+        <h2>Skills &amp; Interests</h2>
+        <p style="color:var(--muted);font-size:0.85rem;margin-bottom:0.8rem">Technical</p>
+        <div class="project-tags" style="margin-top:0;margin-bottom:1.2rem">
           <span class="tag">Python</span>
-          <span class="tag">JavaScript</span>
-          <span class="tag">React</span>
-          <span class="tag">HTML / CSS</span>
-          <span class="tag">Git</span>
-          <span class="tag">Figma</span>
-          <span class="tag">Illustrator</span>
-          <!-- Add / remove tags freely -->
+          <span class="tag">PyTorch</span>
+          <span class="tag">NumPy</span>
+          <span class="tag">SQL</span>
+          <span class="tag">MATLAB</span>
+          <span class="tag">LaTeX</span>
+          <span class="tag">Microsoft Fabric</span>
+          <span class="tag">Power BI</span>
         </div>
-      </section>
-
-      <!-- Projects (brief) -->
-      <section class="resume-section">
-        <h2>Selected Projects</h2>
-
-        <div class="resume-item">
-          <span class="resume-item-title">[Project Name]</span>
-          <span class="resume-item-date">20XX</span>
-          <p class="resume-item-desc">
-            One-line description of the project and what you built or learned.
-            <a href="projects.html">See all projects →</a>
-          </p>
+        <p style="color:var(--muted);font-size:0.85rem;margin-bottom:0.8rem">Interests</p>
+        <div class="project-tags" style="margin-top:0">
+          <span class="tag">Machine Learning</span>
+          <span class="tag">Drawing / Illustration</span>
+          <span class="tag">Animation</span>
+          <span class="tag">Music Production</span>
+          <span class="tag">Bossa Nova</span>
         </div>
-
       </section>
 
     </div>
