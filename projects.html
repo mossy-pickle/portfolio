@@ -83,24 +83,32 @@
           </div>
         </article>
 
-        <!-- ── MDS Global Maps ── -->
+        <!-- ── MDS Global Maps (paper + slides) ── -->
         <article class="project-row">
           <div class="project-row-head">
-            <h3>Reconstructing Global Maps with Multidimensional Scaling</h3>
+            <h3>Reconstructing the Earth from Geodesic Distances Using Classical MDS</h3>
             <div class="project-tags">
               <span class="tag">MDS</span>
-              <span class="tag">Dimensionality Reduction</span>
-              <span class="tag">Numerical Methods</span>
+              <span class="tag">Manifold Learning</span>
+              <span class="tag">Procrustes Alignment</span>
+              <span class="tag">Math 123</span>
             </div>
           </div>
           <p class="project-overview">
             Suppose every map on Earth vanished, and all you had was a traveler's notebook of walking
-            distances between 50,000 major cities — geodesic distances along the planet's surface.
-            Could you rebuild the world map? With Alex Bronstein, I used multidimensional scaling (MDS)
-            to reconstruct global geography purely from pairwise distance data, working through the
-            challenges of embedding curved-surface distances into interpretable coordinates.
+            distances between thousands of cities. Could you rebuild the world map? With Alex Bronstein,
+            I used classical multidimensional scaling to reconstruct global geography from geodesic
+            distances alone — distances that break MDS's core Euclidean assumption, since they live on a
+            curved sphere. Reconstructing the whole globe at once gave heavy distortion (~800 km average
+            error), but partitioning into continents, countries, and finally 5°×5° grid cells — then
+            stitching the pieces back together with Procrustes alignment — drove error down to just
+            0.01 km, demonstrating that curvature can be avoided through localization, but never modeled
+            by MDS itself.
           </p>
           <div class="project-links">
+            <a class="doc-btn" href="assets/projects/math123-final.pdf" target="_blank" rel="noopener">
+              Read Full Paper (PDF)
+            </a>
             <a class="doc-btn" href="assets/projects/mds-global-maps.pptx" download>
               Download Slides (PPTX)
             </a>
@@ -155,26 +163,6 @@
           </p>
           <div class="project-links">
             <a class="doc-btn" href="assets/projects/reading-level-classification.pdf" target="_blank" rel="noopener">
-              Read Full Report (PDF)
-            </a>
-          </div>
-        </article>
-
-        <!-- ── Math 123 final ── -->
-        <article class="project-row">
-          <div class="project-row-head">
-            <h3>Mathematical Data Analysis — Final Project</h3>
-            <div class="project-tags">
-              <span class="tag">Data Analysis</span>
-              <span class="tag">LaTeX</span>
-            </div>
-          </div>
-          <p class="project-overview">
-            <!-- TODO: Owen — replace with a 2-3 sentence overview of what this project covered -->
-            Final project report — overview coming soon.
-          </p>
-          <div class="project-links">
-            <a class="doc-btn" href="assets/projects/math123-final.pdf" target="_blank" rel="noopener">
               Read Full Report (PDF)
             </a>
           </div>
