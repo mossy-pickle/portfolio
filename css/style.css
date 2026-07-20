@@ -1,0 +1,521 @@
+/* ============================================================
+   ROOT & RESET
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #0a0a0f;
+  --surface:   #13131a;
+  --border:    #1e1e2e;
+  --accent:    #7c6aff;
+  --accent2:   #c084fc;
+  --text:      #e2e2f0;
+  --muted:     #6b6b8a;
+  --radius:    12px;
+  --nav-h:     64px;
+  --orbit-r:   160px;   /* orbit ring radius */
+  --icon-size: 64px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent2); }
+img { max-width: 100%; display: block; }
+
+/* ============================================================
+   TOP NAV
+   ============================================================ */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--nav-h);
+  background: rgba(10,10,15,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  z-index: 100;
+}
+
+.nav-logo {
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 0.04em;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--text);
+}
+
+/* ============================================================
+   PAGE WRAPPER
+   ============================================================ */
+.page {
+  padding-top: var(--nav-h);
+  min-height: 100vh;
+}
+
+/* ============================================================
+   HERO — HOME
+   ============================================================ */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - var(--nav-h));
+  padding: 4rem 1.5rem 6rem;
+  text-align: center;
+  position: relative;
+}
+
+/* Subtle radial glow behind the center */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 50% at 50% 40%, rgba(124,106,255,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ---- Orbit stage ---- */
+.orbit-stage {
+  position: relative;
+  width: calc(var(--orbit-r) * 2 + var(--icon-size));
+  height: calc(var(--orbit-r) * 2 + var(--icon-size));
+  margin-bottom: 2.5rem;
+}
+
+/* The ring itself (decorative circle) */
+.orbit-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px dashed rgba(124,106,255,0.25);
+  animation: ring-spin 30s linear infinite;
+}
+
+@keyframes ring-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Center photo */
+.center-photo {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--border);
+  box-shadow: 0 0 0 6px rgba(124,106,255,0.15), 0 0 40px rgba(124,106,255,0.2);
+  background: var(--surface);
+  z-index: 2;
+  transition: box-shadow 0.3s;
+}
+
+.center-photo:hover {
+  box-shadow: 0 0 0 6px rgba(124,106,255,0.3), 0 0 60px rgba(124,106,255,0.35);
+}
+
+.center-photo img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+
+/* Photo placeholder */
+.photo-placeholder {
+  width: 100%; height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  color: var(--muted);
+  font-size: 0.7rem;
+  text-align: center;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.photo-placeholder svg { opacity: 0.5; }
+.photo-placeholder:hover { color: var(--accent); }
+.photo-placeholder:hover svg { opacity: 0.9; }
+
+/* Orbit items */
+.orbit-items {
+  position: absolute;
+  inset: 0;
+  animation: orbit-spin 20s linear infinite;
+}
+
+.orbit-items:hover { animation-play-state: paused; }
+
+@keyframes orbit-spin {
+  to { transform: rotate(360deg); }
+}
+
+.orbit-item {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: var(--icon-size);
+  height: var(--icon-size);
+  margin-top: calc(var(--icon-size) / -2);
+  margin-left: calc(var(--icon-size) / -2);
+  /* positioned by JS via --angle custom property */
+}
+
+.orbit-item a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
+  /* counter-rotate so icon text stays upright */
+  animation: counter-spin 20s linear infinite;
+}
+
+.orbit-items:hover .orbit-item a {
+  animation-play-state: paused;
+}
+
+@keyframes counter-spin {
+  to { transform: rotate(-360deg); }
+}
+
+.orbit-item a:hover {
+  background: rgba(124,106,255,0.15);
+  border-color: var(--accent);
+  color: var(--accent2);
+  box-shadow: 0 0 20px rgba(124,106,255,0.3);
+  transform: rotate(var(--counter)) scale(1.15);
+}
+
+.orbit-item svg { flex-shrink: 0; }
+
+/* ---- Bio block ---- */
+.bio {
+  max-width: 520px;
+}
+
+.bio-name {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, var(--text) 40%, var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.bio-title {
+  font-size: 0.95rem;
+  color: var(--accent);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 1.2rem;
+}
+
+.bio-text {
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.75;
+  margin-bottom: 1.8rem;
+}
+
+.bio-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.6rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.bio-cta:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  color: #fff;
+}
+
+/* ============================================================
+   INNER PAGE HEADER
+   ============================================================ */
+.page-header {
+  padding: 4rem 2rem 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 3rem;
+}
+
+.page-header h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--text) 50%, var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.page-header p {
+  color: var(--muted);
+  margin-top: 0.6rem;
+  font-size: 1rem;
+}
+
+/* ============================================================
+   CONTENT CONTAINER
+   ============================================================ */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 2rem 6rem;
+}
+
+/* ============================================================
+   RESUME PAGE
+   ============================================================ */
+.resume-section { margin-bottom: 3rem; }
+
+.resume-section h2 {
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.2rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.resume-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.2rem 1rem;
+  margin-bottom: 1.8rem;
+}
+
+.resume-item-title { font-weight: 600; }
+.resume-item-date { color: var(--muted); font-size: 0.85rem; white-space: nowrap; }
+.resume-item-sub { color: var(--accent2); font-size: 0.9rem; grid-column: 1; }
+.resume-item-desc { color: var(--muted); font-size: 0.9rem; line-height: 1.65; grid-column: 1 / -1; margin-top: 0.3rem; }
+
+.resume-download {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.4rem;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  color: var(--accent);
+  font-size: 0.88rem;
+  font-weight: 600;
+  transition: background 0.2s, color 0.2s;
+  margin-bottom: 3rem;
+}
+
+.resume-download:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* ============================================================
+   PROJECTS PAGE
+   ============================================================ */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.project-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+.project-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(124,106,255,0.15);
+}
+
+.project-thumb {
+  aspect-ratio: 16/9;
+  background: var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 0.8rem;
+  overflow: hidden;
+}
+
+.project-thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+.project-body { padding: 1.2rem; }
+.project-body h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.4rem; }
+.project-body p { color: var(--muted); font-size: 0.875rem; line-height: 1.6; }
+.project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.8rem; }
+.tag {
+  font-size: 0.7rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(124,106,255,0.12);
+  color: var(--accent2);
+  font-weight: 500;
+}
+
+/* ============================================================
+   ILLUSTRATIONS PAGE
+   ============================================================ */
+.illustrations-grid {
+  columns: 2 280px;
+  gap: 1.2rem;
+}
+
+.illus-item {
+  break-inside: avoid;
+  margin-bottom: 1.2rem;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  transition: border-color 0.2s, transform 0.2s;
+  cursor: pointer;
+}
+
+.illus-item:hover {
+  border-color: var(--accent);
+  transform: scale(1.01);
+}
+
+.illus-placeholder {
+  aspect-ratio: 4/3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 0.8rem;
+  background: var(--border);
+}
+
+/* ============================================================
+   GITHUB PAGE
+   ============================================================ */
+.github-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 3rem 2rem 2rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.github-avatar {
+  width: 96px; height: 96px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  margin-bottom: 1.2rem;
+  background: var(--surface);
+}
+
+.github-hero h2 { font-size: 1.5rem; margin-bottom: 0.4rem; }
+.github-hero p { color: var(--muted); margin-bottom: 1.5rem; }
+
+.github-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem 1.8rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text);
+  font-weight: 600;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.github-btn:hover {
+  border-color: var(--accent);
+  background: rgba(124,106,255,0.1);
+  color: var(--text);
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 2rem;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 640px) {
+  :root { --orbit-r: 120px; --icon-size: 52px; }
+
+  .nav-links { gap: 1.2rem; }
+  .nav-links a { font-size: 0.8rem; }
+
+  .orbit-item a { font-size: 0.5rem; }
+
+  .illustrations-grid { columns: 1; }
+}

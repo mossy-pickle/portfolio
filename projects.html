@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Projects by Owen Haber" />
+  <title>Projects — Owen Haber</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <nav class="nav">
+    <a class="nav-logo" href="index.html">Owen Haber</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="resume.html">Resume</a></li>
+      <li><a href="projects.html" class="active">Projects</a></li>
+      <li><a href="illustrations.html">Illustration</a></li>
+      <li><a href="github.html">GitHub</a></li>
+    </ul>
+  </nav>
+
+  <main class="page">
+    <div class="page-header">
+      <h1>Projects</h1>
+      <p>Things I've built — click any card to learn more.</p>
+    </div>
+
+    <div class="container">
+      <div class="projects-grid">
+
+        <!-- ── PROJECT CARD TEMPLATE ──────────────────────────────
+             To add a project:
+             1. Copy one <article> block below.
+             2. Drop a thumbnail image into assets/projects/
+             3. Update the title, description, tags, and link.
+             ──────────────────────────────────────────────────── -->
+
+        <article class="project-card">
+          <div class="project-thumb">
+            <!-- <img src="assets/projects/project1-thumb.png" alt="Project 1 screenshot" /> -->
+            <span>Thumbnail coming soon</span>
+          </div>
+          <div class="project-body">
+            <h3><a href="#" style="color:inherit">[Project Title]</a></h3>
+            <p>Short description of what this project does and why you built it.</p>
+            <div class="project-tags">
+              <span class="tag">Python</span>
+              <span class="tag">React</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-thumb">
+            <span>Thumbnail coming soon</span>
+          </div>
+          <div class="project-body">
+            <h3><a href="#" style="color:inherit">[Project Title]</a></h3>
+            <p>Short description of what this project does and why you built it.</p>
+            <div class="project-tags">
+              <span class="tag">JavaScript</span>
+              <span class="tag">Node.js</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-thumb">
+            <span>Thumbnail coming soon</span>
+          </div>
+          <div class="project-body">
+            <h3><a href="#" style="color:inherit">[Project Title]</a></h3>
+            <p>Short description of what this project does and why you built it.</p>
+            <div class="project-tags">
+              <span class="tag">Machine Learning</span>
+              <span class="tag">Python</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Add more cards here -->
+
+      </div>
+
+      <!-- Slide decks section -->
+      <section style="margin-top: 4rem;">
+        <h2 style="font-size:0.8rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:1.2rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border);">
+          Slide Decks &amp; Presentations
+        </h2>
+        <p style="color:var(--muted);font-size:0.9rem;">
+          <!-- Drop PDF slide decks into assets/projects/ and link them here -->
+          Presentations will appear here. Add a link like:
+          <code style="background:var(--surface);padding:0.15rem 0.4rem;border-radius:4px;font-size:0.85rem;">
+            &lt;a href="assets/projects/deck.pdf"&gt;My Slide Deck&lt;/a&gt;
+          </code>
+        </p>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; <span id="year"></span> Owen Haber.</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

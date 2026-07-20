@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Resume of Owen Haber" />
+  <title>Resume — Owen Haber</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <nav class="nav">
+    <a class="nav-logo" href="index.html">Owen Haber</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="resume.html" class="active">Resume</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="illustrations.html">Illustration</a></li>
+      <li><a href="github.html">GitHub</a></li>
+    </ul>
+  </nav>
+
+  <main class="page">
+    <div class="page-header">
+      <h1>Resume</h1>
+      <p>My background, education, and experience.</p>
+    </div>
+
+    <div class="container">
+
+      <!-- Download button — swap href when you add a PDF -->
+      <a class="resume-download" href="assets/resume.pdf" download>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        Download PDF
+      </a>
+
+      <!-- Education -->
+      <section class="resume-section">
+        <h2>Education</h2>
+
+        <div class="resume-item">
+          <span class="resume-item-title">[University Name]</span>
+          <span class="resume-item-date">20XX – 20XX</span>
+          <span class="resume-item-sub">[Degree] in [Major]</span>
+          <p class="resume-item-desc">
+            Relevant coursework: [Course 1], [Course 2], [Course 3].
+            GPA: [X.X]/4.0.
+          </p>
+        </div>
+
+      </section>
+
+      <!-- Experience -->
+      <section class="resume-section">
+        <h2>Experience</h2>
+
+        <div class="resume-item">
+          <span class="resume-item-title">[Job Title]</span>
+          <span class="resume-item-date">Month 20XX – Present</span>
+          <span class="resume-item-sub">[Company Name]</span>
+          <p class="resume-item-desc">
+            Describe what you did, the impact it had, and the technologies or skills involved.
+            Keep it to 1–3 sentences per role.
+          </p>
+        </div>
+
+        <div class="resume-item">
+          <span class="resume-item-title">[Job Title]</span>
+          <span class="resume-item-date">Month 20XX – Month 20XX</span>
+          <span class="resume-item-sub">[Company Name]</span>
+          <p class="resume-item-desc">
+            Describe what you did, the impact it had, and the technologies or skills involved.
+          </p>
+        </div>
+
+      </section>
+
+      <!-- Skills -->
+      <section class="resume-section">
+        <h2>Skills</h2>
+        <div class="project-tags" style="margin-top:0.4rem">
+          <span class="tag">Python</span>
+          <span class="tag">JavaScript</span>
+          <span class="tag">React</span>
+          <span class="tag">HTML / CSS</span>
+          <span class="tag">Git</span>
+          <span class="tag">Figma</span>
+          <span class="tag">Illustrator</span>
+          <!-- Add / remove tags freely -->
+        </div>
+      </section>
+
+      <!-- Projects (brief) -->
+      <section class="resume-section">
+        <h2>Selected Projects</h2>
+
+        <div class="resume-item">
+          <span class="resume-item-title">[Project Name]</span>
+          <span class="resume-item-date">20XX</span>
+          <p class="resume-item-desc">
+            One-line description of the project and what you built or learned.
+            <a href="projects.html">See all projects →</a>
+          </p>
+        </div>
+
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; <span id="year"></span> Owen Haber.</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
