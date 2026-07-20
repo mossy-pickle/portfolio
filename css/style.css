@@ -96,6 +96,14 @@ img { max-width: 100%; display: block; }
 /* ============================================================
    HERO — HOME
    ============================================================ */
+/* Full-bleed mountain backdrop behind the hero */
+.hero-wrap {
+  position: relative;
+  background:
+    linear-gradient(rgba(74,85,69,0.82), rgba(74,85,69,0.88) 60%, var(--bg) 98%),
+    url('../assets/images/hero-bg.png') center 35% / cover no-repeat;
+}
+
 .hero {
   display: flex;
   flex-direction: row;
@@ -308,6 +316,20 @@ img { max-width: 100%; display: block; }
   text-transform: uppercase;
   margin-bottom: 1.2rem;
 }
+
+.bio-location {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  margin-bottom: 1.2rem;
+}
+
+.bio-location svg { color: var(--accent2); flex-shrink: 0; }
+.bio-location .arrow { color: var(--lichen); font-weight: 700; }
 
 .bio-text {
   color: var(--muted);
