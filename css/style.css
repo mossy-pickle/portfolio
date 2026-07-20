@@ -112,9 +112,10 @@ img { max-width: 100%; display: block; }
 /* ---- Neuron stage ---- */
 .neuron-stage {
   position: relative;
-  width: calc(var(--orbit-r) * 2 + var(--icon-size) + 40px);
-  height: calc(var(--orbit-r) * 2 + var(--icon-size) + 40px);
+  width: 424px;   /* (160*2) + 64 + 40 */
+  height: 424px;
   margin-bottom: 2.5rem;
+  flex-shrink: 0;
 }
 
 #neuronCanvas {
@@ -199,7 +200,7 @@ img { max-width: 100%; display: block; }
   border-color: var(--accent);
   color: var(--accent2);
   box-shadow: 0 0 24px rgba(124,106,255,0.35);
-  transform: translate(var(--tx), var(--ty)) scale(1.15);
+  transform: scale(1.15);
 }
 
 .neuron-node svg { flex-shrink: 0; }
@@ -478,7 +479,7 @@ img { max-width: 100%; display: block; }
    RESPONSIVE
    ============================================================ */
 @media (max-width: 640px) {
-  :root { --orbit-r: 120px; --icon-size: 52px; }
+  .neuron-stage { width: 320px; height: 320px; }
 
   .nav-links { gap: 1.2rem; }
   .nav-links a { font-size: 0.8rem; }

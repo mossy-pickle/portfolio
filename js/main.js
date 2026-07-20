@@ -1,127 +1,102 @@
-/* ============================================================
-   Active nav link
-   ============================================================ */
-(function setActiveNav() {
-  const current = window.location.pathname.split('/').pop() || 'index.html';
-  document.querySelectorAll('.nav-links a').forEach(a => {
-    const href = a.getAttribute('href');
-    if (href === current || (current === '' && href === 'index.html')) {
-      a.classList.add('active');
-    }
+/* Active nav link */
+(function () {
+  var current = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav-links a').forEach(function (a) {
+    if (a.getAttribute('href') === current) a.classList.add('active');
   });
 })();
 
-/* ============================================================
-   Neuron diagram — static nodes + animated webbing
-   ============================================================ */
-(function initNeuron() {
-  const stage = document.getElementById('neuronStage');
-  const canvas = document.getElementById('neuronCanvas');
+/* Neuron diagram */
+window.addEventListener('load', function () {
+  var stage  = document.getElementById('neuronStage');
+  var canvas = document.getElementById('neuronCanvas');
   if (!stage || !canvas) return;
 
-  const ctx = canvas.getContext('2d');
-  const nodes = Array.from(stage.querySelectorAll('.neuron-node'));
+  var ctx   = canvas.getContext('2d');
+  var nodes = Array.from(stage.querySelectorAll('.neuron-node'));
 
-  // Size the canvas to the stage
-  const W = stage.offsetWidth;
-  const H = stage.offsetHeight;
-  canvas.width = W;
+  /* Use the actual rendered size of the stage */
+  var W = stage.offsetWidth;
+  var H = stage.offsetHeight;
+  canvas.width  = W;
   canvas.height = H;
 
-  const cx = W / 2;
-  const cy = H / 2;
+  var cx = W / 2;
+  var cy = H / 2;
 
-  // Position each node around the center based on data-angle
-  const r = parseInt(
-    getComputedStyle(document.documentElement).getPropertyValue('--orbit-r'), 10
-  ) || 160;
-  const iconSize = parseInt(
-    getComputedStyle(document.documentElement).getPropertyValue('--icon-size'), 10
-  ) || 64;
+  /* Orbit radius = half the stage minus half an icon (64px) minus a small margin */
+  var iconSize = 64;
+  var r = W / 2 - iconSize / 2 - 20;
 
-  const nodePositions = nodes.map(node => {
-    const angleDeg = parseFloat(node.dataset.angle) || 0;
-    const rad = (angleDeg * Math.PI) / 180;
-    const x = cx + Math.cos(rad) * r;
-    const y = cy + Math.sin(rad) * r;
+  /* Position each node */
+  var nodePositions = nodes.map(function (node) {
+    var angleDeg = parseFloat(node.dataset.angle) || 0;
+    var rad = angleDeg * Math.PI / 180;
+    var x = cx + Math.cos(rad) * r;
+    var y = cy + Math.sin(rad) * r;
 
-    // Position the DOM element (centered on x,y)
+    node.style.position = 'absolute';
     node.style.left = (x - iconSize / 2) + 'px';
     node.style.top  = (y - iconSize / 2) + 'px';
-    // Store translate for hover scale-from-center
-    node.style.setProperty('--tx', (x - iconSize / 2) + 'px');
-    node.style.setProperty('--ty', (y - iconSize / 2) + 'px');
+    node.style.width  = iconSize + 'px';
+    node.style.height = iconSize + 'px';
 
-    return { x, y, node };
+    /* Bezier control point: perpendicular wobble */
+    var cpx = cx + (x - cx) * 0.5 + (Math.random() - 0.5) * 50;
+    var cpy = cy + (y - cy) * 0.5 + (Math.random() - 0.5) * 50;
+
+    return { x: x, y: y, cpx: cpx, cpy: cpy };
   });
 
-  /* ----------------------------------------------------------
-     Animated pulse traveling along each dendrite line
-  ---------------------------------------------------------- */
-  // Each connection: center -> node
-  const connections = nodePositions.map((np, i) => ({
-    x1: cx, y1: cy,
-    x2: np.x, y2: np.y,
-    // offset each pulse so they don't all fire together
-    phase: i / nodePositions.length,
-    // slight random wobble points along the path
-    cpx: cx + (np.x - cx) * 0.5 + (Math.random() - 0.5) * 60,
-    cpy: cy + (np.y - cy) * 0.5 + (Math.random() - 0.5) * 60,
-  }));
+  /* Animated pulses */
+  var t = 0;
 
-  let t = 0;
-
-  function lerp(a, b, p) { return a + (b - a) * p; }
-
-  // Point along a quadratic bezier at t
-  function bezier(x1, y1, cpx, cpy, x2, y2, t) {
-    const mt = 1 - t;
+  function bezierPt(x1, y1, cpx, cpy, x2, y2, p) {
+    var m = 1 - p;
     return {
-      x: mt * mt * x1 + 2 * mt * t * cpx + t * t * x2,
-      y: mt * mt * y1 + 2 * mt * t * cpy + t * t * y2,
+      x: m * m * x1 + 2 * m * p * cpx + p * p * x2,
+      y: m * m * y1 + 2 * m * p * cpy + p * p * y2
     };
   }
 
   function draw() {
     ctx.clearRect(0, 0, W, H);
 
-    connections.forEach(c => {
-      // Draw the base dendrite line (dim, static)
+    nodePositions.forEach(function (np, i) {
+      /* Static dendrite line */
       ctx.beginPath();
-      ctx.moveTo(c.x1, c.y1);
-      ctx.quadraticCurveTo(c.cpx, c.cpy, c.x2, c.y2);
-      ctx.strokeStyle = 'rgba(124,106,255,0.12)';
+      ctx.moveTo(cx, cy);
+      ctx.quadraticCurveTo(np.cpx, np.cpy, np.x, np.y);
+      ctx.strokeStyle = 'rgba(124,106,255,0.15)';
       ctx.lineWidth = 1.2;
       ctx.stroke();
 
-      // Traveling pulse
-      const pulseT = ((t * 0.4 + c.phase) % 1);
-      const pt = bezier(c.x1, c.y1, c.cpx, c.cpy, c.x2, c.y2, pulseT);
+      /* Traveling pulse — each offset by 1/4 turn */
+      var p = (t * 0.35 + i * 0.25) % 1;
+      var pt = bezierPt(cx, cy, np.cpx, np.cpy, np.x, np.y, p);
 
-      // Glow halo
-      const grd = ctx.createRadialGradient(pt.x, pt.y, 0, pt.x, pt.y, 14);
-      grd.addColorStop(0,   'rgba(192,132,252,0.55)');
-      grd.addColorStop(0.4, 'rgba(124,106,255,0.25)');
+      var grd = ctx.createRadialGradient(pt.x, pt.y, 0, pt.x, pt.y, 16);
+      grd.addColorStop(0,   'rgba(192,132,252,0.6)');
+      grd.addColorStop(0.5, 'rgba(124,106,255,0.2)');
       grd.addColorStop(1,   'rgba(124,106,255,0)');
       ctx.beginPath();
-      ctx.arc(pt.x, pt.y, 14, 0, Math.PI * 2);
+      ctx.arc(pt.x, pt.y, 16, 0, Math.PI * 2);
       ctx.fillStyle = grd;
       ctx.fill();
 
-      // Bright core dot
       ctx.beginPath();
-      ctx.arc(pt.x, pt.y, 3, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(220,200,255,0.9)';
+      ctx.arc(pt.x, pt.y, 2.5, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(230,210,255,0.95)';
       ctx.fill();
     });
 
-    // Soft glow at center
-    const cGrd = ctx.createRadialGradient(cx, cy, 0, cx, cy, 80);
-    cGrd.addColorStop(0,   'rgba(124,106,255,0.18)');
-    cGrd.addColorStop(1,   'rgba(124,106,255,0)');
+    /* Center glow */
+    var cg = ctx.createRadialGradient(cx, cy, 0, cx, cy, 75);
+    cg.addColorStop(0, 'rgba(124,106,255,0.2)');
+    cg.addColorStop(1, 'rgba(124,106,255,0)');
     ctx.beginPath();
-    ctx.arc(cx, cy, 80, 0, Math.PI * 2);
-    ctx.fillStyle = cGrd;
+    ctx.arc(cx, cy, 75, 0, Math.PI * 2);
+    ctx.fillStyle = cg;
     ctx.fill();
 
     t += 0.005;
@@ -129,4 +104,4 @@
   }
 
   draw();
-})();
+});
