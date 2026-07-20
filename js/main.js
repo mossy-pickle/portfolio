@@ -80,7 +80,101 @@
   });
 })();
 
-/* Neuron diagram — wood rounds connected by mossy dendrites */
+/* Fireflies wandering randomly between the compass icons */
+window.addEventListener('load', function () {
+  var stage  = document.getElementById('compassStage');
+  var canvas = document.getElementById('fireflyCanvas');
+  if (!stage || !canvas) return;
+
+  var ctx = canvas.getContext('2d');
+  var W = stage.offsetWidth;
+  var H = stage.offsetHeight;
+  canvas.width = W;
+  canvas.height = H;
+
+  /* Node centers (N/E/S/W) from the DOM */
+  var nodes = Array.from(stage.querySelectorAll('.compass-node')).map(function (n) {
+    return {
+      x: n.offsetLeft + n.offsetWidth / 2,
+      y: n.offsetTop + n.offsetHeight / 2
+    };
+  });
+
+  /* Each firefly travels node -> random other node on a curved path */
+  var FLY_COUNT = 5;
+  var flies = [];
+
+  function newTrip(fly) {
+    var from = (fly && fly.to !== undefined) ? fly.to : Math.floor(Math.random() * nodes.length);
+    var to = from;
+    while (to === from) to = Math.floor(Math.random() * nodes.length);
+    var a = nodes[from], b = nodes[to];
+    return {
+      from: from, to: to,
+      x1: a.x, y1: a.y, x2: b.x, y2: b.y,
+      /* control point bows the path randomly, sometimes through the middle */
+      cpx: (a.x + b.x) / 2 + (Math.random() - 0.5) * 140,
+      cpy: (a.y + b.y) / 2 + (Math.random() - 0.5) * 140,
+      p: 0,
+      speed: 0.0025 + Math.random() * 0.0035,
+      phase: Math.random() * Math.PI * 2
+    };
+  }
+
+  for (var i = 0; i < FLY_COUNT; i++) {
+    var f = newTrip(null);
+    f.p = Math.random();  /* stagger starting positions */
+    flies.push(f);
+  }
+
+  function bezierPt(f, p) {
+    var m = 1 - p;
+    return {
+      x: m * m * f.x1 + 2 * m * p * f.cpx + p * p * f.x2,
+      y: m * m * f.y1 + 2 * m * p * f.cpy + p * p * f.y2
+    };
+  }
+
+  var t = 0;
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    flies.forEach(function (f, i) {
+      f.p += f.speed;
+      if (f.p >= 1) {
+        flies[i] = newTrip(f);
+        f = flies[i];
+      }
+
+      var pt = bezierPt(f, f.p);
+      var flicker = 0.6 + 0.4 * Math.sin(t * 6 + f.phase);
+
+      /* Glow halo */
+      var grd = ctx.createRadialGradient(pt.x, pt.y, 0, pt.x, pt.y, 14);
+      grd.addColorStop(0,   'rgba(255,224,138,' + (0.7 * flicker) + ')');
+      grd.addColorStop(0.4, 'rgba(255,200,80,'  + (0.28 * flicker) + ')');
+      grd.addColorStop(1,   'rgba(255,200,80,0)');
+      ctx.beginPath();
+      ctx.arc(pt.x, pt.y, 14, 0, Math.PI * 2);
+      ctx.fillStyle = grd;
+      ctx.fill();
+
+      /* Core */
+      ctx.beginPath();
+      ctx.arc(pt.x, pt.y, 2.2, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255,244,200,' + (0.95 * flicker) + ')';
+      ctx.fill();
+    });
+
+    t += 0.016;
+    requestAnimationFrame(draw);
+  }
+
+  draw();
+});
+
+/* Legacy neuron stage (no longer in the page — kept as a no-op guard) */
 window.addEventListener('load', function () {
   var stage  = document.getElementById('neuronStage');
   var canvas = document.getElementById('neuronCanvas');
