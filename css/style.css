@@ -45,6 +45,48 @@
 
 html { scroll-behavior: smooth; }
 
+/* ============================================================
+   PAGE TRANSITIONS
+   Cross-document view transitions: the nav and footer persist
+   while the page content slide-fades between pages.
+   ============================================================ */
+@view-transition { navigation: auto; }
+
+.nav    { view-transition-name: site-nav; }
+.footer { view-transition-name: site-footer; }
+
+::view-transition-old(root) {
+  animation: vt-leave 240ms var(--ease) both;
+}
+
+::view-transition-new(root) {
+  animation: vt-enter 340ms var(--ease) both;
+}
+
+@keyframes vt-leave {
+  to { opacity: 0; transform: translateY(-14px); }
+}
+
+@keyframes vt-enter {
+  from { opacity: 0; transform: translateY(18px); }
+}
+
+/* Fallback: JS adds .page-fade when no view transition ran
+   (unsupported browser, or the transition was skipped) */
+html.page-fade .page { animation: page-enter 460ms var(--ease) both; }
+
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(14px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root),
+  ::view-transition-group(*) {
+    animation: none !important;
+  }
+}
+
 body {
   background: var(--bg);
   /* mossy/lichen washes over dark sage */
@@ -398,12 +440,17 @@ img { max-width: 100%; display: block; }
 
 .bio-name {
   font-family: var(--font-display);
-  font-size: clamp(2.4rem, 5vw, 3.6rem);
-  font-weight: 600;
-  line-height: 1.1;
-  letter-spacing: -0.01em;
-  margin-bottom: 0.6rem;
-  color: var(--text);
+  font-size: clamp(3rem, 7.5vw, 5.4rem);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.7rem;
+  /* semi-transparent fill lets the mountain backdrop show through;
+     the faint lichen stroke keeps the edges crisp */
+  color: rgba(238, 240, 228, 0.45);
+  -webkit-text-stroke: 1.5px rgba(212, 219, 178, 0.55);
+  paint-order: stroke fill;
+  text-shadow: 0 2px 28px rgba(30, 38, 26, 0.4);
 }
 
 .bio-title {

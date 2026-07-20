@@ -1,4 +1,20 @@
 /* ============================================================
+   Page-enter fade — fallback for when the cross-document view
+   transition (see style.css) doesn't run: unsupported browsers,
+   or environments where the browser skips the transition.
+   ============================================================ */
+(function () {
+  /* Fade by default; cancel it only when a real view transition
+     is confirmed handling the entrance instead. */
+  document.documentElement.classList.add('page-fade');
+  if ('onpagereveal' in window) {
+    window.addEventListener('pagereveal', function (e) {
+      if (e.viewTransition) document.documentElement.classList.remove('page-fade');
+    });
+  }
+})();
+
+/* ============================================================
    Slide viewer — opens a modal deck player.
    Trigger: <a class="view-deck" data-deck="assets/projects/slides/mds" data-count="23">
    ============================================================ */
