@@ -1,10 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Portfolio of Owen Haber â€” developer, designer, illustrator." />
-  <title>Owen Haber â€” Portfolio</title>
+  <meta name="description" content="Portfolio of Owen Haber — developer, designer, illustrator." />
+  <title>Owen Haber — Portfolio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -37,7 +37,7 @@
           <img src="assets/images/profile_photo.jpeg" alt="Owen Haber" />
         </div>
 
-        <!-- Static icon nodes â€” positioned by JS using data-angle -->
+        <!-- Static icon nodes — positioned by JS using data-angle -->
         <a class="neuron-node" href="resume.html" data-angle="315" title="Resume">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
             <rect x="4" y="2" width="16" height="20" rx="2"/>
@@ -77,11 +77,11 @@
       <!-- Bio -->
       <div class="bio">
         <h1 class="bio-name">Owen Haber</h1>
-        <p class="bio-title">MS Computer Science Â· Data Science Â· AI</p>
+        <p class="bio-title">MS Computer Science · Data Science · AI</p>
         <p class="bio-text">
           I'm a graduate student at Tufts University studying Artificial Intelligence,
           with a background in Data Science. I build data pipelines, ML models, and
-          interactive tools â€” and I spend my free time on illustration, animation,
+          interactive tools — and I spend my free time on illustration, animation,
           and music production.
         </p>
         <a href="resume.html" class="bio-cta">
@@ -102,17 +102,6 @@
   <script src="js/main.js?v=2"></script>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
-
-    document.getElementById('photoInput').addEventListener('change', function () {
-      const file = this.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = e => {
-        const cp = document.getElementById('centerPhoto');
-        cp.innerHTML = '<img src="' + e.target.result + '" alt="Profile photo" />';
-      };
-      reader.readAsDataURL(file);
-    });
   </script>
 </body>
 </html>
