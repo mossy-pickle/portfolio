@@ -59,37 +59,40 @@ window.addEventListener('load', function () {
     ctx.clearRect(0, 0, W, H);
 
     nodePositions.forEach(function (np, i) {
-      /* Static dendrite — vine-like brown-green */
+      /* Static dendrite — vine-like, slightly mossy */
       ctx.beginPath();
       ctx.moveTo(cx, cy);
       ctx.quadraticCurveTo(np.cpx, np.cpy, np.x, np.y);
-      ctx.strokeStyle = 'rgba(127,85,57,0.3)';
+      ctx.strokeStyle = 'rgba(212,219,178,0.25)';
       ctx.lineWidth = 2;
       ctx.stroke();
 
-      /* Traveling pulse — mossy green firefly */
+      /* Traveling pulse — glowing yellow firefly */
       var p = (t * 0.35 + i * 0.25) % 1;
       var pt = bezierPt(cx, cy, np.cpx, np.cpy, np.x, np.y, p);
 
-      var grd = ctx.createRadialGradient(pt.x, pt.y, 0, pt.x, pt.y, 18);
-      grd.addColorStop(0,   'rgba(123,160,91,0.65)');
-      grd.addColorStop(0.5, 'rgba(74,124,89,0.25)');
-      grd.addColorStop(1,   'rgba(74,124,89,0)');
+      /* flicker: gentle brightness wobble per firefly */
+      var flicker = 0.75 + 0.25 * Math.sin(t * 40 + i * 7);
+
+      var grd = ctx.createRadialGradient(pt.x, pt.y, 0, pt.x, pt.y, 20);
+      grd.addColorStop(0,   'rgba(255,224,138,' + (0.75 * flicker) + ')');
+      grd.addColorStop(0.4, 'rgba(255,200,80,'  + (0.3  * flicker) + ')');
+      grd.addColorStop(1,   'rgba(255,200,80,0)');
       ctx.beginPath();
-      ctx.arc(pt.x, pt.y, 18, 0, Math.PI * 2);
+      ctx.arc(pt.x, pt.y, 20, 0, Math.PI * 2);
       ctx.fillStyle = grd;
       ctx.fill();
 
       ctx.beginPath();
       ctx.arc(pt.x, pt.y, 3, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(58,90,64,0.95)';
+      ctx.fillStyle = 'rgba(255,244,200,' + (0.95 * flicker) + ')';
       ctx.fill();
     });
 
-    /* Soft green glow behind the photo */
+    /* Soft lichen glow behind the photo */
     var cg = ctx.createRadialGradient(cx, cy, 0, cx, cy, W * 0.28);
-    cg.addColorStop(0, 'rgba(123,160,91,0.18)');
-    cg.addColorStop(1, 'rgba(123,160,91,0)');
+    cg.addColorStop(0, 'rgba(212,219,178,0.14)');
+    cg.addColorStop(1, 'rgba(212,219,178,0)');
     ctx.beginPath();
     ctx.arc(cx, cy, W * 0.28, 0, Math.PI * 2);
     ctx.fillStyle = cg;

@@ -4,16 +4,18 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:        #f2efe6;   /* warm parchment */
-  --surface:   #faf8f2;   /* lighter card */
-  --border:    #ddd5c4;   /* soft tan */
-  --accent:    #4a7c59;   /* forest green */
-  --accent2:   #7ba05b;   /* moss green */
+  --bg:        #4a5545;   /* dark sage green */
+  --surface:   #56624f;   /* lighter sage card */
+  --border:    #6a7761;   /* sage border */
+  --accent:    #c2cf9f;   /* light moss */
+  --accent2:   #a3b18a;   /* lichen green */
+  --lichen:    #d4dbb2;   /* pale lichen highlight */
   --wood:      #b08968;   /* light wood */
-  --wood-dark: #7f5539;   /* bark brown */
+  --wood-dark: #5e4326;   /* bark brown */
   --wood-ring: #9c6644;   /* ring brown */
-  --text:      #2f3e34;   /* deep pine */
-  --muted:     #6b7a6e;   /* sage gray */
+  --text:      #eef0e4;   /* warm off-white */
+  --muted:     #b9c2a9;   /* muted sage */
+  --firefly:   #ffe08a;   /* firefly yellow */
   --radius:    12px;
   --nav-h:     64px;
 }
@@ -22,10 +24,11 @@ html { scroll-behavior: smooth; }
 
 body {
   background: var(--bg);
-  /* faint paper/organic texture */
+  /* mossy/lichen washes over dark sage */
   background-image:
-    radial-gradient(ellipse 80% 60% at 20% 0%, rgba(123,160,91,0.08) 0%, transparent 60%),
-    radial-gradient(ellipse 70% 50% at 90% 100%, rgba(176,137,104,0.1) 0%, transparent 60%);
+    radial-gradient(ellipse 70% 55% at 15% 5%, rgba(212,219,178,0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 45% at 88% 95%, rgba(163,177,138,0.14) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 30% at 70% 20%, rgba(194,207,159,0.07) 0%, transparent 65%);
   color: var(--text);
   font-family: 'Inter', system-ui, sans-serif;
   font-size: 16px;
@@ -44,7 +47,7 @@ img { max-width: 100%; display: block; }
   position: fixed;
   top: 0; left: 0; right: 0;
   height: var(--nav-h);
-  background: rgba(242,239,230,0.88);
+  background: rgba(74,85,69,0.88);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
   display: flex;
@@ -58,7 +61,7 @@ img { max-width: 100%; display: block; }
   font-weight: 700;
   font-size: 1.1rem;
   letter-spacing: 0.04em;
-  color: var(--wood-dark);
+  color: var(--lichen);
 }
 
 .nav-logo:hover { color: var(--accent); }
@@ -95,30 +98,32 @@ img { max-width: 100%; display: block; }
    ============================================================ */
 .hero {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
+  gap: 3rem;
   min-height: calc(100vh - var(--nav-h));
-  padding: 3rem 1.5rem 6rem;
-  text-align: center;
+  padding: 3rem 3rem 4rem;
+  text-align: left;
   position: relative;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
-/* Soft forest glow behind the center */
+/* Soft moss glow behind the stage (left side) */
 .hero::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 55% 45% at 50% 38%, rgba(123,160,91,0.16) 0%, transparent 70%);
+  background: radial-gradient(ellipse 40% 55% at 28% 50%, rgba(212,219,178,0.12) 0%, transparent 70%);
   pointer-events: none;
 }
 
 /* ---- Neuron stage ---- */
 .neuron-stage {
   position: relative;
-  width: 660px;
-  height: 660px;
-  margin-bottom: 1rem;
+  width: min(640px, 46vw);
+  height: min(640px, 46vw);
   flex-shrink: 0;
 }
 
@@ -136,26 +141,31 @@ img { max-width: 100%; display: block; }
   position: absolute;
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  width: 280px;
-  height: 280px;
+  width: 46%;
+  height: 46%;
   border-radius: 50%;
   overflow: hidden;
-  /* bark edge + inner ring look */
-  border: 10px solid var(--wood-dark);
+  /* bark edge + inner sapwood ring */
+  border: 12px solid transparent;
+  background:
+    linear-gradient(var(--surface), var(--surface)) padding-box,
+    conic-gradient(
+      #5e4326 0deg, #6f4e2c 20deg, #4d3620 45deg, #705234 70deg,
+      #5a3f24 100deg, #6b4b2e 130deg, #503823 160deg, #745536 195deg,
+      #5e4326 225deg, #6f4e2c 255deg, #4d3620 285deg, #705234 315deg,
+      #5e4326 345deg, #5e4326 360deg
+    ) border-box;
   box-shadow:
-    inset 0 0 0 5px var(--wood),
-    0 0 0 4px var(--wood-ring),
-    0 10px 40px rgba(127,85,57,0.35);
-  background: var(--surface);
+    inset 0 0 0 6px #e6c99e,
+    0 12px 45px rgba(30,38,26,0.5);
   z-index: 2;
-  transition: box-shadow 0.3s, transform 0.3s;
+  transition: box-shadow 0.3s;
 }
 
 .center-photo:hover {
   box-shadow:
-    inset 0 0 0 5px var(--wood),
-    0 0 0 4px var(--wood-ring),
-    0 14px 55px rgba(74,124,89,0.4);
+    inset 0 0 0 6px #e6c99e,
+    0 16px 60px rgba(212,219,178,0.3);
 }
 
 .center-photo img {
@@ -184,8 +194,11 @@ img { max-width: 100%; display: block; }
 .photo-placeholder:hover svg { opacity: 0.9; }
 
 /* ---- Wood-round icon nodes ----
-   Layered radial gradients simulate growth rings on a
-   cut log round, with a darker irregular bark rim.     */
+   Realistic cut-log look built in two layers:
+   1. The node itself is the BARK — an irregular conic
+      gradient of dark browns/grays so the rim looks rough.
+   2. ::before is the inner sapwood/heartwood face with
+      growth rings perfectly centered.                   */
 .neuron-node {
   position: absolute;
   display: flex;
@@ -194,48 +207,89 @@ img { max-width: 100%; display: block; }
   justify-content: center;
   gap: 5px;
   border-radius: 50%;
-  color: var(--wood-dark);
+  color: #4a3520;
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.07em;
   text-transform: uppercase;
   z-index: 2;
-  /* wood slice: rings via repeating-radial-gradient over a warm base */
+  /* bark rim: uneven blotches of brown around the circumference */
   background:
-    repeating-radial-gradient(
-      circle at 47% 44%,
-      rgba(156,102,68,0.28) 0px,
-      rgba(156,102,68,0.28) 2px,
-      transparent 2px,
-      transparent 11px
-    ),
-    radial-gradient(circle at 47% 44%, #e8cfae 0%, #d9b98f 45%, #c49a6c 78%, #a97e55 100%);
-  border: 7px solid var(--wood-dark);
+    conic-gradient(
+      #5e4326 0deg, #6f4e2c 14deg, #4d3620 33deg, #705234 52deg,
+      #5a3f24 71deg, #6b4b2e 95deg, #503823 118deg, #745536 141deg,
+      #5e4326 162deg, #6f4e2c 185deg, #4d3620 209deg, #705234 231deg,
+      #5a3f24 255deg, #6b4b2e 278deg, #503823 300deg, #745536 322deg,
+      #5e4326 344deg, #5e4326 360deg
+    );
   box-shadow:
-    0 0 0 3px var(--wood-ring),
-    0 6px 18px rgba(127,85,57,0.35),
-    inset 0 2px 6px rgba(255,255,255,0.35),
-    inset 0 -3px 8px rgba(127,85,57,0.3);
+    0 8px 20px rgba(30,38,26,0.45),
+    inset 0 2px 4px rgba(255,255,255,0.15);
   transition: transform 0.25s, box-shadow 0.25s, color 0.25s;
   /* positioned & sized by JS */
 }
 
+/* Inner wood face with centered growth rings */
+.neuron-node::before {
+  content: '';
+  position: absolute;
+  inset: 9%;
+  border-radius: 50%;
+  background:
+    /* fine radial cracks */
+    repeating-conic-gradient(
+      rgba(122,84,50,0.12) 0deg, rgba(122,84,50,0.12) 1deg,
+      transparent 1deg, transparent 24deg
+    ),
+    /* centered growth rings, tighter near the middle */
+    repeating-radial-gradient(
+      circle at 50% 50%,
+      rgba(148,100,62,0.35) 0px,
+      rgba(148,100,62,0.35) 1.5px,
+      transparent 1.5px,
+      transparent 7px
+    ),
+    repeating-radial-gradient(
+      circle at 50% 50%,
+      rgba(120,78,45,0.18) 0px,
+      rgba(120,78,45,0.18) 3px,
+      transparent 3px,
+      transparent 17px
+    ),
+    /* heartwood -> sapwood: darker core, pale outer ring */
+    radial-gradient(
+      circle at 50% 50%,
+      #c99e6e 0%, #d4ab7c 22%, #ddb98c 45%,
+      #e6c99e 68%, #efdcb4 86%, #f2e3c0 100%
+    );
+  box-shadow:
+    inset 0 2px 6px rgba(94,67,38,0.35),
+    inset 0 -2px 5px rgba(94,67,38,0.25);
+  z-index: 0;
+}
+
+.neuron-node svg,
+.neuron-node span {
+  position: relative;
+  z-index: 1;
+}
+
 .neuron-node:hover {
-  color: var(--accent);
-  transform: scale(1.12) rotate(-3deg);
+  color: #2f5233;
+  transform: scale(1.1) rotate(-3deg);
   box-shadow:
     0 0 0 3px var(--accent2),
-    0 10px 28px rgba(74,124,89,0.4),
-    inset 0 2px 6px rgba(255,255,255,0.35),
-    inset 0 -3px 8px rgba(127,85,57,0.3);
+    0 12px 30px rgba(30,38,26,0.5),
+    inset 0 2px 4px rgba(255,255,255,0.15);
 }
 
 .neuron-node svg { flex-shrink: 0; width: 30px; height: 30px; }
 .neuron-node span { pointer-events: none; }
 
-/* ---- Bio block ---- */
+/* ---- Bio block (right column) ---- */
 .bio {
-  max-width: 560px;
+  max-width: 520px;
+  flex: 1;
 }
 
 .bio-name {
@@ -268,19 +322,19 @@ img { max-width: 100%; display: block; }
   gap: 0.5rem;
   padding: 0.75rem 1.7rem;
   border-radius: 999px;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  color: #fff;
-  font-weight: 600;
+  background: linear-gradient(135deg, var(--accent2), var(--lichen));
+  color: #37412f;
+  font-weight: 700;
   font-size: 0.9rem;
-  box-shadow: 0 4px 14px rgba(74,124,89,0.3);
+  box-shadow: 0 4px 14px rgba(30,38,26,0.35);
   transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
 }
 
 .bio-cta:hover {
   opacity: 0.95;
   transform: translateY(-2px);
-  box-shadow: 0 8px 22px rgba(74,124,89,0.35);
-  color: #fff;
+  box-shadow: 0 8px 22px rgba(30,38,26,0.4);
+  color: #37412f;
 }
 
 /* ============================================================
@@ -297,7 +351,7 @@ img { max-width: 100%; display: block; }
 .page-header h1 {
   font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 700;
-  color: var(--wood-dark);
+  color: var(--lichen);
 }
 
 .page-header p {
@@ -339,7 +393,7 @@ img { max-width: 100%; display: block; }
 
 .resume-item-title { font-weight: 600; color: var(--text); }
 .resume-item-date { color: var(--muted); font-size: 0.85rem; white-space: nowrap; }
-.resume-item-sub { color: var(--wood-ring); font-size: 0.9rem; grid-column: 1; font-weight: 500; }
+.resume-item-sub { color: #d9b98f; font-size: 0.9rem; grid-column: 1; font-weight: 500; }
 .resume-item-desc { color: var(--muted); font-size: 0.9rem; line-height: 1.65; grid-column: 1 / -1; margin-top: 0.3rem; }
 
 .resume-download {
@@ -406,8 +460,8 @@ img { max-width: 100%; display: block; }
   font-size: 0.7rem;
   padding: 0.2rem 0.6rem;
   border-radius: 999px;
-  background: rgba(123,160,91,0.18);
-  color: var(--accent);
+  background: rgba(212,219,178,0.16);
+  color: var(--lichen);
   font-weight: 600;
 }
 
@@ -504,10 +558,16 @@ img { max-width: 100%; display: block; }
 /* ============================================================
    RESPONSIVE
    ============================================================ */
-@media (max-width: 720px) {
-  .neuron-stage { width: 92vw; height: 92vw; max-width: 420px; max-height: 420px; }
+@media (max-width: 960px) {
+  .hero {
+    flex-direction: column;
+    text-align: center;
+    gap: 2rem;
+  }
 
-  .center-photo { width: 180px; height: 180px; border-width: 7px; }
+  .neuron-stage { width: 92vw; height: 92vw; max-width: 460px; max-height: 460px; }
+
+  .center-photo { border-width: 8px; }
 
   .nav-links { gap: 1.2rem; }
   .nav-links a { font-size: 0.8rem; }
