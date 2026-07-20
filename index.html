@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css?v=7" />
+  <link rel="stylesheet" href="css/style.css?v=8" />
 </head>
 <body>
 
@@ -27,16 +27,12 @@
     <div class="hero-wrap">
     <section class="hero">
 
-      <!-- Scene: photo + compass nav -->
-      <div class="scene">
+      <!-- Left half: big circular photo with icons around it -->
+      <div class="stage">
 
-        <div class="photo-rect">
+        <div class="stage-photo">
           <img src="assets/images/profile_photo.jpeg" alt="Owen Haber" />
         </div>
-
-        <div class="compass" id="compassStage">
-          <canvas id="fireflyCanvas"></canvas>
-          <div class="compass-ring"></div>
 
           <a class="compass-node n" href="resume.html" title="Resume">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -71,9 +67,10 @@
             </svg>
             <span>GitHub</span>
           </a>
-        </div>
 
-      </div><!-- /scene -->
+      </div><!-- /stage -->
+
+      <div class="hero-divider"></div>
 
       <!-- Bio -->
       <div class="bio">
@@ -107,7 +104,7 @@
     <p>&copy; <span id="year"></span> Owen Haber. Built with care.</p>
   </footer>
 
-  <script src="js/main.js?v=7"></script>
+  <script src="js/main.js?v=8"></script>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
