@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css?v=2" />
+  <link rel="stylesheet" href="css/style.css?v=3" />
 </head>
 <body>
 
@@ -26,80 +26,161 @@
   <main class="page">
     <div class="page-header">
       <h1>Projects</h1>
-      <p>Things I've built — click any card to learn more.</p>
+      <p>Machine learning, data science, and deep learning work — each with a short overview before the full report or slides.</p>
     </div>
 
     <div class="container">
-      <div class="projects-grid">
+      <div class="project-list">
 
-        <!-- ── PROJECT CARD TEMPLATE ──────────────────────────────
-             To add a project:
-             1. Copy one <article> block below.
-             2. Drop a thumbnail image into assets/projects/
-             3. Update the title, description, tags, and link.
-             ──────────────────────────────────────────────────── -->
-
-        <article class="project-card">
-          <div class="project-thumb">
-            <!-- <img src="assets/projects/project1-thumb.png" alt="Project 1 screenshot" /> -->
-            <span>Thumbnail coming soon</span>
-          </div>
-          <div class="project-body">
-            <h3><a href="#" style="color:inherit">[Project Title]</a></h3>
-            <p>Short description of what this project does and why you built it.</p>
+        <!-- ── Capstone ── -->
+        <article class="project-row">
+          <div class="project-row-head">
+            <h3>Predicting Amino Acid Content from Food Labels</h3>
             <div class="project-tags">
+              <span class="tag">Senior Capstone</span>
+              <span class="tag">Regression Forests</span>
               <span class="tag">Python</span>
-              <span class="tag">React</span>
+              <span class="tag">flok Health</span>
             </div>
+          </div>
+          <p class="project-overview">
+            People with rare metabolic disorders like PKU must carefully track phenylalanine intake,
+            but estimating it for manufactured foods is a slow, manual process. For my senior capstone,
+            in collaboration with flok Health, I designed and implemented a regression forest model that
+            predicts phenylalanine content directly from standard nutrition label data — replacing
+            hand-estimation with a fast, reproducible pipeline that can serve the rare disease community.
+          </p>
+          <div class="project-links">
+            <a class="doc-btn" href="assets/projects/capstone-report.pdf" target="_blank" rel="noopener">
+              Read Full Report (PDF)
+            </a>
           </div>
         </article>
 
-        <article class="project-card">
-          <div class="project-thumb">
-            <span>Thumbnail coming soon</span>
-          </div>
-          <div class="project-body">
-            <h3><a href="#" style="color:inherit">[Project Title]</a></h3>
-            <p>Short description of what this project does and why you built it.</p>
+        <!-- ── Energy forecasting ── -->
+        <article class="project-row">
+          <div class="project-row-head">
+            <h3>Multi-Modal Deep Learning for Energy Demand Forecasting</h3>
             <div class="project-tags">
-              <span class="tag">JavaScript</span>
-              <span class="tag">Node.js</span>
+              <span class="tag">Deep Learning</span>
+              <span class="tag">Transformers</span>
+              <span class="tag">CNNs</span>
+              <span class="tag">PyTorch</span>
             </div>
+          </div>
+          <p class="project-overview">
+            A multi-modal forecasting architecture that fuses image data with tabular time-series to
+            predict energy demand. A shared CNN encoder downsamples each timestep's imagery into compact
+            32-dimensional embeddings, which flow into a lightweight transformer (4 layers, 4 heads)
+            alongside tabular tokens with zero-masked future demand. The design prioritizes computational
+            efficiency — small embedding dimensions, shared weights, and a compact MLP prediction head —
+            without sacrificing forecast quality.
+          </p>
+          <div class="project-links">
+            <a class="doc-btn" href="assets/projects/energy-demand-forecasting.pptx" download>
+              Download Slides (PPTX)
+            </a>
           </div>
         </article>
 
-        <article class="project-card">
-          <div class="project-thumb">
-            <span>Thumbnail coming soon</span>
-          </div>
-          <div class="project-body">
-            <h3><a href="#" style="color:inherit">[Project Title]</a></h3>
-            <p>Short description of what this project does and why you built it.</p>
+        <!-- ── MDS Global Maps ── -->
+        <article class="project-row">
+          <div class="project-row-head">
+            <h3>Reconstructing Global Maps with Multidimensional Scaling</h3>
             <div class="project-tags">
-              <span class="tag">Machine Learning</span>
-              <span class="tag">Python</span>
+              <span class="tag">MDS</span>
+              <span class="tag">Dimensionality Reduction</span>
+              <span class="tag">Numerical Methods</span>
             </div>
+          </div>
+          <p class="project-overview">
+            Suppose every map on Earth vanished, and all you had was a traveler's notebook of walking
+            distances between 50,000 major cities — geodesic distances along the planet's surface.
+            Could you rebuild the world map? With Alex Bronstein, I used multidimensional scaling (MDS)
+            to reconstruct global geography purely from pairwise distance data, working through the
+            challenges of embedding curved-surface distances into interpretable coordinates.
+          </p>
+          <div class="project-links">
+            <a class="doc-btn" href="assets/projects/mds-global-maps.pptx" download>
+              Download Slides (PPTX)
+            </a>
           </div>
         </article>
 
-        <!-- Add more cards here -->
+        <!-- ── Movie recommendations ── -->
+        <article class="project-row">
+          <div class="project-row-head">
+            <h3>Movie Recommendation System</h3>
+            <div class="project-tags">
+              <span class="tag">Collaborative Filtering</span>
+              <span class="tag">SVD++</span>
+              <span class="tag">Ensemble Methods</span>
+              <span class="tag">CS 135</span>
+            </div>
+          </div>
+          <p class="project-overview">
+            Built a movie recommender on the MovieLens dataset in two stages: first, latent-factor
+            collaborative filtering implemented from scratch with SGD and autograd, exploring how factor
+            count and L2 regularization shape overfitting. Then an open-ended challenge combining SVD++
+            (implicit feedback) and KNNBaseline (neighborhood similarity) into a weighted ensemble —
+            reaching 0.701 MAE on the class leaderboard, better than either model alone. The learned
+            embeddings even clustered films by franchise and separated beloved originals from their
+            weaker sequels. With Sam Mard.
+          </p>
+          <div class="project-links">
+            <a class="doc-btn" href="assets/projects/movie-recommendations.pdf" target="_blank" rel="noopener">
+              Read Full Report (PDF)
+            </a>
+          </div>
+        </article>
+
+        <!-- ── Reading level classification ── -->
+        <article class="project-row">
+          <div class="project-row-head">
+            <h3>Classifying Reading-Level Difficulty from Text</h3>
+            <div class="project-tags">
+              <span class="tag">NLP</span>
+              <span class="tag">BERT Embeddings</span>
+              <span class="tag">Logistic Regression</span>
+              <span class="tag">CS 135</span>
+            </div>
+          </div>
+          <p class="project-overview">
+            Can a model tell whether a passage is written for lower or upper reading levels? Starting
+            from a custom bag-of-words pipeline (hand-rolled tokenization, vocabulary construction, and
+            leakage-safe cross-validation), then upgrading to BERT embeddings with PCA and author-grouped
+            K-fold validation to honestly measure generalization to unseen writers. The BERT pipeline
+            improved test AUROC from 0.700 to 0.732, and error analysis showed the model performs best on
+            longer, more complex passages. With Sam Mard.
+          </p>
+          <div class="project-links">
+            <a class="doc-btn" href="assets/projects/reading-level-classification.pdf" target="_blank" rel="noopener">
+              Read Full Report (PDF)
+            </a>
+          </div>
+        </article>
+
+        <!-- ── Math 123 final ── -->
+        <article class="project-row">
+          <div class="project-row-head">
+            <h3>Mathematical Data Analysis — Final Project</h3>
+            <div class="project-tags">
+              <span class="tag">Data Analysis</span>
+              <span class="tag">LaTeX</span>
+            </div>
+          </div>
+          <p class="project-overview">
+            <!-- TODO: Owen — replace with a 2-3 sentence overview of what this project covered -->
+            Final project report — overview coming soon.
+          </p>
+          <div class="project-links">
+            <a class="doc-btn" href="assets/projects/math123-final.pdf" target="_blank" rel="noopener">
+              Read Full Report (PDF)
+            </a>
+          </div>
+        </article>
 
       </div>
-
-      <!-- Slide decks section -->
-      <section style="margin-top: 4rem;">
-        <h2 style="font-size:0.8rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:1.2rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border);">
-          Slide Decks &amp; Presentations
-        </h2>
-        <p style="color:var(--muted);font-size:0.9rem;">
-          <!-- Drop PDF slide decks into assets/projects/ and link them here -->
-          Presentations will appear here. Add a link like:
-          <code style="background:var(--surface);padding:0.15rem 0.4rem;border-radius:4px;font-size:0.85rem;">
-            &lt;a href="assets/projects/deck.pdf"&gt;My Slide Deck&lt;/a&gt;
-          </code>
-        </p>
-      </section>
-
     </div>
   </main>
 
@@ -107,7 +188,7 @@
     <p>&copy; <span id="year"></span> Owen Haber.</p>
   </footer>
 
-  <script src="js/main.js?v=2"></script>
+  <script src="js/main.js?v=3"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
