@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css?v=17" />
+  <link rel="stylesheet" href="css/style.css?v=18" />
 </head>
 <body>
 
@@ -108,7 +108,7 @@
             <button class="deck-btn deck-prev" aria-label="Previous page">&#8593;</button>
             <span class="deck-counter">&mdash; / &mdash;</span>
             <button class="deck-btn deck-next" aria-label="Next page">&#8595;</button>
-            <span class="deck-hint">scroll &#8597;</span>
+            <span class="deck-hint">scroll &#8597; &middot; click to zoom</span>
           </div>
         </div>
       </section>
@@ -128,12 +128,13 @@
     <p>&copy; <span id="year"></span> Owen Haber.</p>
   </footer>
 
-  <script src="js/main.js?v=17"></script>
+  <script src="js/main.js?v=18"></script>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Lightbox for real images (grid + deck tops)
-    document.querySelectorAll('.illus-item img, .deck-frame img').forEach(img => {
+    // Lightbox for real images (grid + digital deck; the wheel
+    // has its own fullscreen zoom in main.js)
+    document.querySelectorAll('.illus-item img, .deck-h .deck-frame img').forEach(img => {
       img.style.cursor = 'zoom-in';
       img.addEventListener('click', e => {
         e.stopPropagation();

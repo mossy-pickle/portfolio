@@ -929,14 +929,19 @@ body.leaving .container { animation-delay: 0.05s; }
    wd1/wd2 — the pages you just passed — tuck down and back
    below it. Scrolling rotates the drum: the front card swings
    down under itself while the next card drops into its place. */
-.deck-wheel { flex-direction: row; align-items: center; gap: 1.2rem; }
+.deck-wheel {
+  flex-direction: row;
+  align-items: center;
+  gap: 1.2rem;
+  max-width: 760px;
+}
 
 .deck-wheel .deck-frame {
   flex: 1;
-  max-width: 480px;
+  max-width: 620px;
   aspect-ratio: 4 / 5;
-  margin-top: 3rem; /* headroom for the deep pages peeking above */
-  perspective: 1000px;
+  margin-top: 3.5rem; /* headroom for the deep pages peeking above */
+  perspective: 1100px;
 }
 
 .deck-wheel .deck-frame > * {
@@ -964,6 +969,39 @@ body.leaving .container { animation-delay: 0.05s; }
   opacity: 1;
   filter: drop-shadow(0 20px 32px rgba(0,0,0,0.55));
   pointer-events: auto;
+  cursor: zoom-in;
+}
+
+/* ---- Fullscreen zoom: the front card pulled up large ---- */
+.wheel-zoom {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  background: rgba(12, 15, 10, 0);
+  transition: background 0.35s;
+  cursor: zoom-out;
+}
+
+.wheel-zoom.open { background: rgba(12, 15, 10, 0.93); }
+
+.wheel-zoom-card {
+  position: absolute;
+  object-fit: contain;
+  transition: transform 0.45s cubic-bezier(0.3, 1.15, 0.4, 1);
+  filter: drop-shadow(0 24px 48px rgba(0,0,0,0.6));
+  cursor: zoom-out;
+}
+
+.wheel-zoom-card.deck-page {
+  background: var(--surface);
+  border: 1px dashed var(--border);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
 }
 
 /* climbing up the back of the drum (next pages) */

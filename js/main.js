@@ -136,6 +136,60 @@
   var decks = document.querySelectorAll('.deck');
   if (!decks.length) return;
 
+  /* Fullscreen zoom for the wheel's front card: FLIP the card
+     from its on-wheel rect up to center screen; click/Esc drops
+     it back where it came from. */
+  function zoomCard(card) {
+    if (document.querySelector('.wheel-zoom')) return;
+
+    var start = card.getBoundingClientRect();
+    var overlay = document.createElement('div');
+    overlay.className = 'wheel-zoom';
+    var clone = card.cloneNode(true);
+    clone.className = 'wheel-zoom-card' +
+      (card.classList.contains('deck-page') ? ' deck-page' : '');
+    clone.removeAttribute('style');
+    overlay.appendChild(clone);
+    document.body.appendChild(overlay);
+    document.body.style.overflow = 'hidden';
+
+    /* final box: keep the card's aspect, fill up to 90vw x 86vh */
+    var vw = window.innerWidth, vh = window.innerHeight;
+    var ratio = start.width / start.height;
+    var fw = Math.min(vw * 0.9, vh * 0.86 * ratio);
+    var fh = fw / ratio;
+    var fx = (vw - fw) / 2, fy = (vh - fh) / 2;
+
+    clone.style.width = fw + 'px';
+    clone.style.height = fh + 'px';
+    clone.style.left = fx + 'px';
+    clone.style.top = fy + 'px';
+    clone.style.transformOrigin = 'top left';
+
+    var dx = start.left - fx, dy = start.top - fy, s = start.width / fw;
+    var atSource = 'translate(' + dx + 'px,' + dy + 'px) scale(' + s + ')';
+
+    clone.style.transition = 'none';
+    clone.style.transform = atSource;
+    void clone.offsetWidth;
+    clone.style.transition = '';
+    overlay.classList.add('open');
+    clone.style.transform = 'translate(0, 0) scale(1)';
+
+    function onKey(e) { if (e.key === 'Escape') close(); }
+    function close() {
+      overlay.classList.remove('open');
+      clone.style.transform = atSource;
+      document.removeEventListener('keydown', onKey);
+      setTimeout(function () {
+        overlay.remove();
+        document.body.style.overflow = '';
+      }, 400);
+    }
+    overlay.addEventListener('click', close);
+    document.addEventListener('keydown', onKey);
+  }
+
   decks.forEach(function (deck) {
     var frame   = deck.querySelector('.deck-frame');
     var counter = deck.querySelector('.deck-counter');
@@ -218,6 +272,16 @@
 
     prevBtn.addEventListener('click', function () { step(-1); });
     nextBtn.addEventListener('click', function () { step(1); });
+
+    /* Click the front card to pull it up fullscreen */
+    if (isWheel) {
+      frame.addEventListener('click', function (e) {
+        var top = frame.querySelector('.w0');
+        if (top && (e.target === top || top.contains(e.target))) {
+          zoomCard(top);
+        }
+      });
+    }
 
     /* Wheel rotation: scroll (or swipe) over the frame.
        scroll down = pull the back page forward */
