@@ -156,19 +156,51 @@
       prevBtn.disabled = nextBtn.disabled = true;
     }
 
+    var WHEEL_CLASSES = ['w0', 'wu1', 'wu2', 'wd1', 'wd2', 'w-hdn'];
+
+    function wheelClass(signed) {
+      if (signed === 0)  return 'w0';
+      if (signed === 1)  return 'wu1';
+      if (signed === 2)  return 'wu2';
+      if (signed === -1) return 'wd1';
+      if (signed === -2) return 'wd2';
+      /* deep positions: below-back gets w-hdn, above-back is the
+         classless default state */
+      return signed < 0 ? 'w-hdn' : '';
+    }
+
     function render() {
+      var n = items.length;
       items.forEach(function (item, i) {
-        var off = (i - idx + items.length) % items.length;
+        var off = (i - idx + n) % n;
         if (isWheel) {
-          item.classList.remove('w0', 'w1', 'w2', 'w3');
-          if (off <= 3) item.classList.add('w' + off);
+          /* signed offset: positive = up the back, negative = below */
+          var signed = off * 2 > n ? off - n : off;
+          var cls = wheelClass(signed);
+          var prev = parseInt(item.dataset.pos || 'NaN', 10);
+          /* a card recycling from one deep side to the other must
+             snap, not sweep across the visible wheel */
+          var wrap = !isNaN(prev) &&
+                     (prev > 0) !== (signed > 0) &&
+                     Math.abs(prev) >= 2 && Math.abs(signed) >= 2;
+          WHEEL_CLASSES.forEach(function (c) { item.classList.remove(c); });
+          if (wrap) {
+            item.style.transition = 'none';
+            if (cls) item.classList.add(cls);
+            void item.offsetWidth; /* force reflow so the snap lands */
+            item.style.transition = '';
+          } else if (cls) {
+            item.classList.add(cls);
+          }
+          item.dataset.pos = String(signed);
+          item.style.zIndex = String(10 - Math.abs(signed));
         } else {
           item.classList.remove('is-top', 'is-under1', 'is-under2', 'is-out');
           if (off === 0) item.classList.add('is-top');
           if (off === 1) item.classList.add('is-under1');
           if (off === 2) item.classList.add('is-under2');
+          item.style.zIndex = String(n - off);
         }
-        item.style.zIndex = String(items.length - off);
       });
       counter.textContent = pad(idx + 1) + ' / ' + pad(items.length);
     }
