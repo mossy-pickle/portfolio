@@ -227,24 +227,23 @@ img { max-width: 100%; display: block; }
   pointer-events: none;
 }
 
-/* ---- Stage: big circular photo with icons around it ---- */
+/* ---- Stage: circular photo with a directory listing below ---- */
 .stage {
-  position: relative;
-  width: min(560px, 44vw);
-  height: min(560px, 44vw);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.8rem;
+  width: min(480px, 42vw);
   flex-shrink: 0;
 }
 
-/* Large circular center photo */
+/* Circular photo up top */
 .stage-photo {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 68%;
-  height: 68%;
+  width: min(280px, 26vw);
+  aspect-ratio: 1;
   border-radius: 50%;
   overflow: hidden;
-  border: 4px solid var(--border);
+  border: 3px solid var(--border);
   box-shadow:
     0 0 0 8px rgba(255,180,84,0.10),
     0 16px 50px rgba(30,38,26,0.5);
@@ -271,59 +270,72 @@ img { max-width: 100%; display: block; }
   margin: 3rem 0;
 }
 
-/* Icon nodes — static circles at N/E/S/W around the photo */
-.compass-node {
-  position: absolute;
-  width: 92px;
-  height: 92px;
+/* ---- Directory listing: the four sections as ls output ---- */
+.dir-list {
+  width: 100%;
+  background: rgba(24,29,21,0.72);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.9rem 0.9rem 0.7rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  border-radius: 50%;
-  background: var(--surface);
-  border: 2px solid var(--border);
-  color: var(--muted);
+  gap: 0.15rem;
   font-family: var(--font-mono);
-  font-size: 0.6rem;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  z-index: 2;
-  box-shadow: 0 6px 18px rgba(30,38,26,0.35);
-  transition: border-color 0.25s, color 0.25s, transform 0.25s, box-shadow 0.25s, background 0.25s;
-  /* trail markers swing in from above, staggered left → right */
-  animation: node-swing-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-@keyframes node-swing-in {
-  0%   { opacity: 0; transform: translate(-50%, -170%) rotate(-30deg) scale(0.4); }
-  55%  { opacity: 1; transform: translate(-50%, -44%)  rotate(9deg)   scale(1.07); }
-  76%  { transform: translate(-50%, -53%) rotate(-4deg) scale(0.97); }
-  100% { transform: translate(-50%, -50%) rotate(0deg)  scale(1); }
+.dir-cmd {
+  color: var(--muted);
+  font-size: 0.78rem;
+  padding: 0 0.6rem;
+  margin-bottom: 0.55rem;
+  animation: row-in 0.4s var(--ease) 0.1s both;
 }
 
-/* Arc along the bottom half of the photo, left → right:
-   Resume 150° · Projects 110° · Illustration 70° · GitHub 30°
-   (angles from center, y-down; radius ~46% of stage) */
-.compass-node { transform: translate(-50%, -50%); }
+.dir-row {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.55rem 0.6rem;
+  border-radius: 4px;
+  color: var(--text);
+  font-size: 0.92rem;
+  transition: background 0.15s, color 0.15s, transform 0.15s;
+  /* output lines print in one after another */
+  animation: row-in 0.45s var(--ease) both;
+}
 
-.compass-node.n { left: 10.2%; top: 73%;   animation-delay: 0.25s; }  /* Resume      (150°) */
-.compass-node.e { left: 34.3%; top: 93.2%; animation-delay: 0.4s;  }  /* Projects    (110°) */
-.compass-node.s { left: 65.7%; top: 93.2%; animation-delay: 0.55s; }  /* Illustration (70°) */
-.compass-node.w { left: 89.8%; top: 73%;   animation-delay: 0.7s;  }  /* GitHub       (30°) */
+.dir-row:nth-of-type(1) { animation-delay: 0.25s; }
+.dir-row:nth-of-type(2) { animation-delay: 0.4s;  }
+.dir-row:nth-of-type(3) { animation-delay: 0.55s; }
+.dir-row:nth-of-type(4) { animation-delay: 0.7s;  }
 
-.compass-node:hover {
-  border-color: var(--amber);
+@keyframes row-in {
+  from { opacity: 0; transform: translateX(-16px); }
+}
+
+.dir-row svg {
+  flex-shrink: 0;
+  color: var(--muted);
+  transition: color 0.15s;
+}
+
+.dir-name { font-weight: 500; }
+
+.dir-comment {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 0.72rem;
+  opacity: 0.75;
+  white-space: nowrap;
+}
+
+.dir-row:hover {
+  background: rgba(255,180,84,0.1);
   color: var(--amber);
-  background: #333d2c;
-  box-shadow: 0 0 26px rgba(255,180,84,0.4);
-  transform: translate(-50%, -50%) scale(1.12) rotate(-3deg);
+  transform: translateX(4px);
 }
 
-.compass-node svg { flex-shrink: 0; }
-.compass-node span { pointer-events: none; }
+.dir-row:hover svg { color: var(--amber); }
 
 /* Center photo — big wood-slice frame */
 .center-photo {
@@ -567,33 +579,37 @@ img { max-width: 100%; display: block; }
    navigating. On the home page the chosen marker flares while
    the rest of the hero recedes; inner pages lift out quickly.
    ============================================================ */
-body.leaving .compass-node {
-  animation: node-drop 0.45s cubic-bezier(0.5, 0, 0.75, 0.4) both;
+body.leaving .dir-row {
+  animation: row-out 0.3s ease-in both;
 }
-body.leaving .compass-node.e { animation-delay: 0.05s; }
-body.leaving .compass-node.s { animation-delay: 0.1s; }
-body.leaving .compass-node.w { animation-delay: 0.15s; }
+body.leaving .dir-row:nth-of-type(2) { animation-delay: 0.04s; }
+body.leaving .dir-row:nth-of-type(3) { animation-delay: 0.08s; }
+body.leaving .dir-row:nth-of-type(4) { animation-delay: 0.12s; }
 
-body.leaving .compass-node.chosen {
-  animation: node-chosen 0.55s var(--ease) both;
-  z-index: 5;
+body.leaving .dir-cmd { opacity: 0; transition: opacity 0.25s; }
+
+/* the picked row flashes amber like an executed command */
+body.leaving .dir-row.chosen {
+  animation: row-chosen 0.55s var(--ease) both;
 }
+body.leaving .dir-row.chosen svg,
+body.leaving .dir-row.chosen .dir-comment { color: #241503; }
 
 body.leaving .stage-photo   { animation: photo-leave 0.5s var(--ease) 0.05s both; }
 body.leaving .bio           { animation: bio-leave 0.45s var(--ease) both; }
 body.leaving .hero-divider  { opacity: 0; transition: opacity 0.3s; }
 
-@keyframes node-drop {
-  to { opacity: 0; transform: translate(-50%, 40%) rotate(22deg) scale(0.75); }
+@keyframes row-out {
+  to { opacity: 0; transform: translateX(-20px); }
 }
 
-@keyframes node-chosen {
-  40%  { opacity: 1; transform: translate(-50%, -50%) scale(1.3) rotate(3deg); }
-  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.9); }
+@keyframes row-chosen {
+  35%  { opacity: 1; background: var(--amber); color: #241503; transform: translateX(6px); }
+  100% { opacity: 0; background: var(--amber); color: #241503; transform: translateX(16px); }
 }
 
 @keyframes photo-leave {
-  to { opacity: 0; transform: translate(-50%, -50%) scale(0.88); }
+  to { opacity: 0; transform: scale(0.9); }
 }
 
 @keyframes bio-leave {
@@ -1025,8 +1041,8 @@ body.leaving .container { animation-delay: 0.05s; }
     gap: 2.5rem;
   }
 
-  .stage { width: min(440px, 90vw); height: min(440px, 90vw); }
-  .compass-node { width: 76px; height: 76px; font-size: 0.55rem; }
+  .stage { width: min(440px, 92vw); }
+  .stage-photo { width: min(240px, 56vw); }
 
   .hero-divider { display: none; }
 
@@ -1034,4 +1050,8 @@ body.leaving .container { animation-delay: 0.05s; }
   .nav-links a { font-size: 0.8rem; }
 
   .illustrations-grid { columns: 1; }
+}
+
+@media (max-width: 700px) {
+  .dir-comment { display: none; }
 }
