@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css?v=15" />
+  <link rel="stylesheet" href="css/style.css?v=16" />
 </head>
 <body>
 
@@ -88,23 +88,27 @@
       </section>
 
       <!-- ── // sketchbook ───────────────────────────────────
-           Vertical pile — pages stack behind the top one,
-           flip through with the up/down arrows.
-           To add: put <img> tags directly inside .deck-frame. -->
+           3D rotating wheel of cutout page scans: front page
+           largest, the next 2-3 stacked up and back into depth.
+           Scroll over the wheel (or use the arrows) to rotate.
+           To add: put <img> tags directly inside .deck-frame
+           (transparent-background cutouts work best). -->
       <section class="illus-section">
         <h2>sketchbook</h2>
 
-        <div class="deck deck-v">
+        <div class="deck deck-wheel">
           <div class="deck-frame">
             <div class="deck-page">page_01 — coming soon</div>
             <div class="deck-page">page_02 — coming soon</div>
             <div class="deck-page">page_03 — coming soon</div>
             <div class="deck-page">page_04 — coming soon</div>
+            <div class="deck-page">page_05 — coming soon</div>
           </div>
           <div class="deck-controls deck-controls-v">
             <button class="deck-btn deck-prev" aria-label="Previous page">&#8593;</button>
             <span class="deck-counter">&mdash; / &mdash;</span>
             <button class="deck-btn deck-next" aria-label="Next page">&#8595;</button>
+            <span class="deck-hint">scroll &#8597;</span>
           </div>
         </div>
       </section>
@@ -124,7 +128,7 @@
     <p>&copy; <span id="year"></span> Owen Haber.</p>
   </footer>
 
-  <script src="js/main.js?v=15"></script>
+  <script src="js/main.js?v=16"></script>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 

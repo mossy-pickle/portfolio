@@ -128,7 +128,8 @@
 
 /* ============================================================
    Decks — cycling stacks on the illustration page.
-   .deck-h slides horizontally; .deck-v flips a vertical pile.
+   .deck-h slides horizontally; .deck-wheel is a 3D rotating
+   drum of pages (scroll over it to rotate).
    Items are the direct children of .deck-frame.
    ============================================================ */
 (function () {
@@ -141,6 +142,7 @@
     var prevBtn = deck.querySelector('.deck-prev');
     var nextBtn = deck.querySelector('.deck-next');
     var items   = Array.prototype.slice.call(frame.children);
+    var isWheel = deck.classList.contains('deck-wheel');
     var idx = 0;
 
     function pad(n) { return (n < 10 ? '0' : '') + n; }
@@ -157,10 +159,15 @@
     function render() {
       items.forEach(function (item, i) {
         var off = (i - idx + items.length) % items.length;
-        item.classList.remove('is-top', 'is-under1', 'is-under2', 'is-out');
-        if (off === 0) item.classList.add('is-top');
-        if (off === 1) item.classList.add('is-under1');
-        if (off === 2) item.classList.add('is-under2');
+        if (isWheel) {
+          item.classList.remove('w0', 'w1', 'w2', 'w3');
+          if (off <= 3) item.classList.add('w' + off);
+        } else {
+          item.classList.remove('is-top', 'is-under1', 'is-under2', 'is-out');
+          if (off === 0) item.classList.add('is-top');
+          if (off === 1) item.classList.add('is-under1');
+          if (off === 2) item.classList.add('is-under2');
+        }
         item.style.zIndex = String(items.length - off);
       });
       counter.textContent = pad(idx + 1) + ' / ' + pad(items.length);
@@ -170,7 +177,7 @@
       var old = items[idx];
       idx = (idx + dir + items.length) % items.length;
       render();
-      if (dir > 0) {
+      if (!isWheel && dir > 0) {
         /* outgoing item exits forward, above the rest */
         old.classList.add('is-out');
         old.style.zIndex = String(items.length + 1);
@@ -179,6 +186,40 @@
 
     prevBtn.addEventListener('click', function () { step(-1); });
     nextBtn.addEventListener('click', function () { step(1); });
+
+    /* Wheel rotation: scroll (or swipe) over the frame.
+       scroll down = pull the back page forward */
+    if (isWheel && items.length > 1) {
+      var acc = 0, locked = false;
+
+      frame.addEventListener('wheel', function (e) {
+        e.preventDefault();
+        if (locked) return;
+        acc += e.deltaY;
+        if (Math.abs(acc) > 60) {
+          step(acc > 0 ? 1 : -1);
+          acc = 0;
+          locked = true;
+          setTimeout(function () { locked = false; }, 420);
+        }
+      }, { passive: false });
+
+      var touchY = null;
+      frame.addEventListener('touchstart', function (e) {
+        touchY = e.touches[0].clientY;
+      }, { passive: true });
+      frame.addEventListener('touchmove', function (e) {
+        if (touchY === null) return;
+        var dy = touchY - e.touches[0].clientY;
+        if (Math.abs(dy) > 45) {
+          step(dy > 0 ? 1 : -1);
+          touchY = e.touches[0].clientY;
+          e.preventDefault();
+        }
+      }, { passive: false });
+      frame.addEventListener('touchend', function () { touchY = null; });
+    }
+
     render();
   });
 })();

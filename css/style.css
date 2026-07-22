@@ -923,19 +923,70 @@ body.leaving .container { animation-delay: 0.05s; }
 .deck-h .deck-frame > .is-top { transform: translateX(0); }
 .deck-h .deck-frame > .is-out { transform: translateX(-44px); opacity: 0; }
 
-/* vertical: the pile peeks out above the top page */
-.deck-v { flex-direction: row; align-items: center; gap: 1.2rem; }
-.deck-v .deck-frame {
+/* ---- Sketchbook wheel: 3D rotating drum of cutout pages ----
+   Front page (w0) is largest, center-low; w1–w3 recede up and
+   back into depth. Scrolling over the wheel rotates it. */
+.deck-wheel { flex-direction: row; align-items: center; gap: 1.2rem; }
+
+.deck-wheel .deck-frame {
   flex: 1;
-  max-width: 460px;
+  max-width: 480px;
   aspect-ratio: 4 / 5;
-  margin-top: 30px; /* headroom for the pages peeking above */
+  margin-top: 4rem; /* headroom for the deep pages peeking above */
+  perspective: 1000px;
 }
-.deck-v .deck-frame > *          { transform: translateY(-30px) scale(0.9); }
-.deck-v .deck-frame > .is-under2 { transform: translateY(-26px) scale(0.93);  opacity: 1; filter: brightness(0.55); }
-.deck-v .deck-frame > .is-under1 { transform: translateY(-13px) scale(0.965); opacity: 1; filter: brightness(0.75); }
-.deck-v .deck-frame > .is-top    { transform: translateY(0) scale(1); }
-.deck-v .deck-frame > .is-out    { transform: translateY(46px) scale(1); opacity: 0; }
+
+.deck-wheel .deck-frame > * {
+  /* cutout scans: no frame, no clipping — just the shape */
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  overflow: visible;
+  object-fit: contain;
+  inset: auto 0 0 0;
+  height: 70%;
+  transform: translateY(-56%) translateZ(-470px);
+  transition: transform 0.55s var(--ease), opacity 0.4s, filter 0.55s;
+}
+
+.deck-wheel .deck-frame > .w0 {
+  transform: translateY(0) translateZ(0);
+  opacity: 1;
+  filter: drop-shadow(0 18px 30px rgba(0,0,0,0.5));
+  pointer-events: auto;
+}
+
+.deck-wheel .deck-frame > .w1 {
+  transform: translateY(-30%) translateZ(-190px);
+  opacity: 1;
+  filter: brightness(0.7) drop-shadow(0 12px 20px rgba(0,0,0,0.4));
+}
+
+.deck-wheel .deck-frame > .w2 {
+  transform: translateY(-45%) translateZ(-340px);
+  opacity: 0.95;
+  filter: brightness(0.48) drop-shadow(0 8px 14px rgba(0,0,0,0.35));
+}
+
+.deck-wheel .deck-frame > .w3 {
+  transform: translateY(-56%) translateZ(-460px);
+  opacity: 0.7;
+  filter: brightness(0.32);
+}
+
+/* placeholder pages need a visible body until the cutouts land */
+.deck-wheel .deck-page {
+  background: var(--surface);
+  border: 1px dashed var(--border);
+  border-radius: 6px;
+}
+
+.deck-hint {
+  color: var(--muted);
+  font-size: 0.68rem;
+  opacity: 0.75;
+  text-align: center;
+}
 
 /* placeholder pages until real images land */
 .deck-page {
