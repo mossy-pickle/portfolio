@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css?v=14" />
+  <link rel="stylesheet" href="css/style.css?v=15" />
 </head>
 <body>
 
@@ -31,46 +31,90 @@
 
     <div class="container">
 
-      <!-- ── ILLUSTRATION GRID ──────────────────────────────────
-           To add an illustration:
-           1. Drop the image file into assets/illustrations/
-           2. Copy an <figure> block below and update src / alt.
-           The masonry grid handles layout automatically.
-           ──────────────────────────────────────────────────── -->
+      <!-- ── // professional ─────────────────────────────────
+           Cover pieces in the masonry grid.
+           To add one: drop the file in assets/illustrations/
+           and copy a <figure> block with an <img src / alt>. -->
+      <section class="illus-section">
+        <h2>professional</h2>
 
-      <div class="illustrations-grid" id="illusGrid">
+        <div class="illustrations-grid" id="illusGrid">
 
-        <figure class="illus-item">
-          <!-- <img src="assets/illustrations/piece1.jpg" alt="Description of piece" /> -->
-          <div class="illus-placeholder">Image coming soon</div>
-        </figure>
+          <figure class="illus-item">
+            <!-- <img src="assets/illustrations/piece1.jpg" alt="Description of piece" /> -->
+            <div class="illus-placeholder">Image coming soon</div>
+          </figure>
 
-        <figure class="illus-item">
-          <div class="illus-placeholder" style="aspect-ratio:3/4">Image coming soon</div>
-        </figure>
+          <figure class="illus-item">
+            <div class="illus-placeholder" style="aspect-ratio:3/4">Image coming soon</div>
+          </figure>
 
-        <figure class="illus-item">
-          <div class="illus-placeholder" style="aspect-ratio:1/1">Image coming soon</div>
-        </figure>
+          <figure class="illus-item">
+            <div class="illus-placeholder" style="aspect-ratio:1/1">Image coming soon</div>
+          </figure>
 
-        <figure class="illus-item">
-          <div class="illus-placeholder" style="aspect-ratio:16/9">Image coming soon</div>
-        </figure>
+          <figure class="illus-item">
+            <div class="illus-placeholder" style="aspect-ratio:16/9">Image coming soon</div>
+          </figure>
 
-        <figure class="illus-item">
-          <div class="illus-placeholder" style="aspect-ratio:3/4">Image coming soon</div>
-        </figure>
+          <figure class="illus-item">
+            <div class="illus-placeholder" style="aspect-ratio:3/4">Image coming soon</div>
+          </figure>
 
-        <!-- Add more figures here -->
+          <!-- Add more figures here -->
 
-      </div>
+        </div>
+      </section>
+
+      <!-- ── // digital ──────────────────────────────────────
+           Horizontal slide deck — arrows cycle the pieces.
+           To add: put <img src="assets/illustrations/digital/xx.png" alt="…" />
+           tags directly inside .deck-frame (order = slide order). -->
+      <section class="illus-section">
+        <h2>digital</h2>
+
+        <div class="deck deck-h">
+          <div class="deck-frame">
+            <div class="deck-page">digital_01.png — coming soon</div>
+            <div class="deck-page">digital_02.png — coming soon</div>
+            <div class="deck-page">digital_03.png — coming soon</div>
+          </div>
+          <div class="deck-controls">
+            <button class="deck-btn deck-prev" aria-label="Previous slide">&#8592;</button>
+            <span class="deck-counter">&mdash; / &mdash;</span>
+            <button class="deck-btn deck-next" aria-label="Next slide">&#8594;</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── // sketchbook ───────────────────────────────────
+           Vertical pile — pages stack behind the top one,
+           flip through with the up/down arrows.
+           To add: put <img> tags directly inside .deck-frame. -->
+      <section class="illus-section">
+        <h2>sketchbook</h2>
+
+        <div class="deck deck-v">
+          <div class="deck-frame">
+            <div class="deck-page">page_01 — coming soon</div>
+            <div class="deck-page">page_02 — coming soon</div>
+            <div class="deck-page">page_03 — coming soon</div>
+            <div class="deck-page">page_04 — coming soon</div>
+          </div>
+          <div class="deck-controls deck-controls-v">
+            <button class="deck-btn deck-prev" aria-label="Previous page">&#8593;</button>
+            <span class="deck-counter">&mdash; / &mdash;</span>
+            <button class="deck-btn deck-next" aria-label="Next page">&#8595;</button>
+          </div>
+        </div>
+      </section>
 
       <!-- Lightbox overlay (activates on image click) -->
       <div id="lightbox" style="
         display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);
         z-index:200;align-items:center;justify-content:center;cursor:zoom-out;
       " onclick="this.style.display='none'">
-        <img id="lightboxImg" src="" alt="" style="max-width:90vw;max-height:90vh;border-radius:8px;" />
+        <img id="lightboxImg" src="" alt="" style="max-width:90vw;max-height:90vh;border-radius:6px;" />
       </div>
 
     </div>
@@ -80,12 +124,12 @@
     <p>&copy; <span id="year"></span> Owen Haber.</p>
   </footer>
 
-  <script src="js/main.js?v=12"></script>
+  <script src="js/main.js?v=15"></script>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Lightbox for real images
-    document.querySelectorAll('.illus-item img').forEach(img => {
+    // Lightbox for real images (grid + deck tops)
+    document.querySelectorAll('.illus-item img, .deck-frame img').forEach(img => {
       img.style.cursor = 'zoom-in';
       img.addEventListener('click', e => {
         e.stopPropagation();

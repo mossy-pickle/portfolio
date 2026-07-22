@@ -81,24 +81,22 @@ html.page-fade .page { animation: page-enter 460ms var(--ease) both; }
 /* Inner-page content rises in a beat behind the header */
 html.page-fade .project-row,
 html.page-fade .resume-section,
-html.page-fade .illus-item,
+html.page-fade .illus-section,
 html.page-fade .github-hero {
   animation: page-enter 500ms var(--ease) both;
 }
 html.page-fade .project-row:nth-child(1),
 html.page-fade .resume-section:nth-of-type(1),
-html.page-fade .illus-item:nth-child(1) { animation-delay: 0.08s; }
+html.page-fade .illus-section:nth-of-type(1) { animation-delay: 0.08s; }
 html.page-fade .project-row:nth-child(2),
 html.page-fade .resume-section:nth-of-type(2),
-html.page-fade .illus-item:nth-child(2) { animation-delay: 0.15s; }
+html.page-fade .illus-section:nth-of-type(2) { animation-delay: 0.15s; }
 html.page-fade .project-row:nth-child(3),
 html.page-fade .resume-section:nth-of-type(3),
-html.page-fade .illus-item:nth-child(3) { animation-delay: 0.22s; }
+html.page-fade .illus-section:nth-of-type(3) { animation-delay: 0.22s; }
 html.page-fade .project-row:nth-child(4),
-html.page-fade .resume-section:nth-of-type(4),
-html.page-fade .illus-item:nth-child(4) { animation-delay: 0.29s; }
-html.page-fade .project-row:nth-child(n+5),
-html.page-fade .illus-item:nth-child(n+5) { animation-delay: 0.36s; }
+html.page-fade .resume-section:nth-of-type(4) { animation-delay: 0.29s; }
+html.page-fade .project-row:nth-child(n+5) { animation-delay: 0.36s; }
 
 @keyframes page-enter {
   from { opacity: 0; transform: translateY(14px); }
@@ -674,7 +672,8 @@ body.leaving .container { animation-delay: 0.05s; }
    ============================================================ */
 .resume-section { margin-bottom: 3rem; }
 
-.resume-section h2 {
+.resume-section h2,
+.illus-section h2 {
   font-family: var(--font-mono);
   font-size: 0.82rem;
   font-weight: 500;
@@ -687,7 +686,8 @@ body.leaving .container { animation-delay: 0.05s; }
 }
 
 /* comment-style section labels: // education */
-.resume-section h2::before {
+.resume-section h2::before,
+.illus-section h2::before {
   content: '// ';
   color: var(--muted);
 }
@@ -877,6 +877,113 @@ body.leaving .container { animation-delay: 0.05s; }
   color: var(--muted);
   font-size: 0.8rem;
   background: var(--border);
+}
+
+/* ---- Illustration sections ---- */
+.illus-section { margin-bottom: 3.5rem; }
+
+/* ---- Decks: cycling stacks of images ----
+   .deck-h slides horizontally; .deck-v flips a vertical pile.
+   Items are the direct children of .deck-frame (img or .deck-page). */
+.deck {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  max-width: 640px;
+}
+
+.deck-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+}
+
+.deck-frame > * {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  background: var(--surface);
+  object-fit: cover;
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.45s var(--ease), opacity 0.35s, filter 0.35s;
+}
+
+.deck-frame > .is-top {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* horizontal: hidden items wait to the right, exits leave left */
+.deck-h .deck-frame > *       { transform: translateX(44px); }
+.deck-h .deck-frame > .is-top { transform: translateX(0); }
+.deck-h .deck-frame > .is-out { transform: translateX(-44px); opacity: 0; }
+
+/* vertical: the pile peeks out above the top page */
+.deck-v { flex-direction: row; align-items: center; gap: 1.2rem; }
+.deck-v .deck-frame {
+  flex: 1;
+  max-width: 460px;
+  aspect-ratio: 4 / 5;
+  margin-top: 30px; /* headroom for the pages peeking above */
+}
+.deck-v .deck-frame > *          { transform: translateY(-30px) scale(0.9); }
+.deck-v .deck-frame > .is-under2 { transform: translateY(-26px) scale(0.93);  opacity: 1; filter: brightness(0.55); }
+.deck-v .deck-frame > .is-under1 { transform: translateY(-13px) scale(0.965); opacity: 1; filter: brightness(0.75); }
+.deck-v .deck-frame > .is-top    { transform: translateY(0) scale(1); }
+.deck-v .deck-frame > .is-out    { transform: translateY(46px) scale(1); opacity: 0; }
+
+/* placeholder pages until real images land */
+.deck-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+}
+
+.deck-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  font-family: var(--font-mono);
+}
+
+.deck-controls-v { flex-direction: column; }
+
+.deck-btn {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--amber-deep);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--amber);
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, color 0.15s;
+}
+
+.deck-btn:hover:not(:disabled) {
+  background: var(--amber);
+  color: #241503;
+}
+
+.deck-btn:disabled { opacity: 0.35; cursor: default; }
+
+.deck-counter {
+  color: var(--muted);
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  font-variant-numeric: tabular-nums;
 }
 
 /* ============================================================

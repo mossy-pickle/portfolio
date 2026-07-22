@@ -126,6 +126,63 @@
   });
 })();
 
+/* ============================================================
+   Decks — cycling stacks on the illustration page.
+   .deck-h slides horizontally; .deck-v flips a vertical pile.
+   Items are the direct children of .deck-frame.
+   ============================================================ */
+(function () {
+  var decks = document.querySelectorAll('.deck');
+  if (!decks.length) return;
+
+  decks.forEach(function (deck) {
+    var frame   = deck.querySelector('.deck-frame');
+    var counter = deck.querySelector('.deck-counter');
+    var prevBtn = deck.querySelector('.deck-prev');
+    var nextBtn = deck.querySelector('.deck-next');
+    var items   = Array.prototype.slice.call(frame.children);
+    var idx = 0;
+
+    function pad(n) { return (n < 10 ? '0' : '') + n; }
+
+    if (!items.length) {
+      counter.textContent = '00 / 00';
+      prevBtn.disabled = nextBtn.disabled = true;
+      return;
+    }
+    if (items.length === 1) {
+      prevBtn.disabled = nextBtn.disabled = true;
+    }
+
+    function render() {
+      items.forEach(function (item, i) {
+        var off = (i - idx + items.length) % items.length;
+        item.classList.remove('is-top', 'is-under1', 'is-under2', 'is-out');
+        if (off === 0) item.classList.add('is-top');
+        if (off === 1) item.classList.add('is-under1');
+        if (off === 2) item.classList.add('is-under2');
+        item.style.zIndex = String(items.length - off);
+      });
+      counter.textContent = pad(idx + 1) + ' / ' + pad(items.length);
+    }
+
+    function step(dir) {
+      var old = items[idx];
+      idx = (idx + dir + items.length) % items.length;
+      render();
+      if (dir > 0) {
+        /* outgoing item exits forward, above the rest */
+        old.classList.add('is-out');
+        old.style.zIndex = String(items.length + 1);
+      }
+    }
+
+    prevBtn.addEventListener('click', function () { step(-1); });
+    nextBtn.addEventListener('click', function () { step(1); });
+    render();
+  });
+})();
+
 /* Active nav link */
 (function () {
   var current = window.location.pathname.split('/').pop() || 'index.html';
