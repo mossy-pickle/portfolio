@@ -919,7 +919,8 @@ body.leaving .container { animation-delay: 0.05s; }
 }
 
 /* horizontal: hidden items wait to the right, exits leave left */
-.deck-h .deck-frame > *       { transform: translateX(44px); }
+.deck-h .deck-frame           { aspect-ratio: 4 / 3; }
+.deck-h .deck-frame > *       { transform: translateX(44px); object-fit: contain; }
 .deck-h .deck-frame > .is-top { transform: translateX(0); }
 .deck-h .deck-frame > .is-out { transform: translateX(-44px); opacity: 0; }
 

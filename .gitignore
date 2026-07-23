@@ -2,6 +2,7 @@
 Thumbs.db
 *.log
 
-# full-resolution scan originals (~30MB each) — the site serves
-# the optimized copies in assets/illustrations/sketchbook/
+# full-resolution originals — the site serves the optimized
+# .webp copies generated next to them
 assets/illustrations/sketchbook pages/
+assets/illustrations/digital/drive-download*
