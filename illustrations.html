@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css?v=20" />
+  <link rel="stylesheet" href="css/style.css?v=21" />
 </head>
 <body>
 
@@ -66,31 +66,9 @@
         </div>
       </section>
 
-      <!-- ── // digital ──────────────────────────────────────
-           Horizontal slide deck — arrows cycle the pieces.
-           To add: put <img src="assets/illustrations/digital/xx.png" alt="…" />
-           tags directly inside .deck-frame (order = slide order). -->
-      <section class="illus-section">
-        <h2>digital</h2>
-
-        <div class="deck deck-h">
-          <div class="deck-frame">
-            <img src="assets/illustrations/digital/tomatoes.webp" alt="Digital painting — carton of tomatoes with a neon rim light on a green grid" decoding="async" />
-            <img src="assets/illustrations/digital/baja-blast.webp" alt="Digital painting — Mtn Dew Baja Blast can with graffiti splatter" decoding="async" />
-            <img src="assets/illustrations/digital/cheesecake.webp" alt="Digital painting — blueberry cheesecake slice on a checkered diner floor" decoding="async" />
-            <img src="assets/illustrations/digital/bottle-house.webp" alt="Digital painting — Victorian house inside a bourbon bottle" decoding="async" />
-          </div>
-          <div class="deck-controls">
-            <button class="deck-btn deck-prev" aria-label="Previous slide">&#8592;</button>
-            <span class="deck-counter">&mdash; / &mdash;</span>
-            <button class="deck-btn deck-next" aria-label="Next slide">&#8594;</button>
-          </div>
-        </div>
-      </section>
-
       <!-- ── // sketchbook ───────────────────────────────────
            3D rotating wheel of cutout page scans: front page
-           largest, the next 2-3 stacked up and back into depth.
+           largest, two layers above and below into depth.
            Scroll over the wheel (or use the arrows) to rotate.
            To add: put <img> tags directly inside .deck-frame
            (transparent-background cutouts work best). -->
@@ -115,6 +93,28 @@
         </div>
       </section>
 
+      <!-- ── // digital ──────────────────────────────────────
+           Frameless museum grid — pieces float on the ground,
+           no borders since dimensions vary. Click to zoom. -->
+      <section class="illus-section">
+        <h2>digital</h2>
+
+        <div class="illustrations-grid illustrations-grid--bare">
+          <figure class="illus-item">
+            <img src="assets/illustrations/digital/tomatoes.webp" alt="Digital painting — carton of tomatoes with a neon rim light on a green grid" decoding="async" />
+          </figure>
+          <figure class="illus-item">
+            <img src="assets/illustrations/digital/baja-blast.webp" alt="Digital painting — Mtn Dew Baja Blast can with graffiti splatter" decoding="async" />
+          </figure>
+          <figure class="illus-item">
+            <img src="assets/illustrations/digital/cheesecake.webp" alt="Digital painting — blueberry cheesecake slice on a checkered diner floor" decoding="async" />
+          </figure>
+          <figure class="illus-item">
+            <img src="assets/illustrations/digital/bottle-house.webp" alt="Digital painting — Victorian house inside a bourbon bottle" decoding="async" />
+          </figure>
+        </div>
+      </section>
+
       <!-- Lightbox overlay (activates on image click) -->
       <div id="lightbox" style="
         display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);
@@ -130,7 +130,7 @@
     <p>&copy; <span id="year"></span> Owen Haber.</p>
   </footer>
 
-  <script src="js/main.js?v=20"></script>
+  <script src="js/main.js?v=21"></script>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 

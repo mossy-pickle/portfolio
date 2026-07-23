@@ -869,6 +869,24 @@ body.leaving .container { animation-delay: 0.05s; }
   transform: scale(1.01);
 }
 
+/* Frameless variant — pieces of mixed dimensions float on the
+   ground with no panel, border, or clipping */
+.illustrations-grid--bare .illus-item {
+  border: 0;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: visible;
+}
+
+.illustrations-grid--bare .illus-item img {
+  filter: drop-shadow(0 10px 22px rgba(0,0,0,0.45));
+}
+
+.illustrations-grid--bare .illus-item:hover {
+  transform: scale(1.02);
+}
+
 .illus-placeholder {
   aspect-ratio: 4/3;
   display: flex;
@@ -934,15 +952,15 @@ body.leaving .container { animation-delay: 0.05s; }
   flex-direction: row;
   align-items: center;
   gap: 1.2rem;
-  max-width: 760px;
+  max-width: 840px;
 }
 
 .deck-wheel .deck-frame {
   flex: 1;
-  max-width: 620px;
+  max-width: 700px;
   aspect-ratio: 4 / 5;
   margin-top: 3.5rem; /* headroom for the deep pages peeking above */
-  perspective: 1100px;
+  perspective: 1150px;
 }
 
 .deck-wheel .deck-frame > * {
