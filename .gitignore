@@ -1,3 +1,7 @@
 .DS_Store
 Thumbs.db
 *.log
+
+# full-resolution scan originals (~30MB each) — the site serves
+# the optimized copies in assets/illustrations/sketchbook/
+assets/illustrations/sketchbook pages/

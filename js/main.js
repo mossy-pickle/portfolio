@@ -153,9 +153,12 @@
     document.body.appendChild(overlay);
     document.body.style.overflow = 'hidden';
 
-    /* final box: keep the card's aspect, fill up to 90vw x 86vh */
+    /* final box: fill up to 90vw x 86vh at the image's natural
+       aspect (fall back to the card box for non-images) */
     var vw = window.innerWidth, vh = window.innerHeight;
-    var ratio = start.width / start.height;
+    var ratio = (card.naturalWidth && card.naturalHeight)
+      ? card.naturalWidth / card.naturalHeight
+      : start.width / start.height;
     var fw = Math.min(vw * 0.9, vh * 0.86 * ratio);
     var fh = fw / ratio;
     var fx = (vw - fw) / 2, fy = (vh - fh) / 2;
