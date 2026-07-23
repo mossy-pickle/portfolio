@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css?v=21" />
+  <link rel="stylesheet" href="css/style.css?v=22" />
 </head>
 <body>
 
@@ -115,22 +115,23 @@
         </div>
       </section>
 
-      <!-- Lightbox overlay (activates on image click) -->
-      <div id="lightbox" style="
-        display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);
-        z-index:200;align-items:center;justify-content:center;cursor:zoom-out;
-      " onclick="this.style.display='none'">
-        <img id="lightboxImg" src="" alt="" style="max-width:90vw;max-height:90vh;border-radius:6px;" />
-      </div>
-
     </div>
   </main>
+
+  <!-- Lightbox overlay (body-level: position:fixed must not sit
+       inside main, whose entrance animation leaves a transform) -->
+  <div id="lightbox" style="
+    display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);
+    z-index:200;align-items:center;justify-content:center;cursor:zoom-out;
+  " onclick="this.style.display='none'">
+    <img id="lightboxImg" src="" alt="" style="max-width:90vw;max-height:90vh;border-radius:6px;" />
+  </div>
 
   <footer class="footer">
     <p>&copy; <span id="year"></span> Owen Haber.</p>
   </footer>
 
-  <script src="js/main.js?v=21"></script>
+  <script src="js/main.js?v=22"></script>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 

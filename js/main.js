@@ -12,6 +12,12 @@
       if (e.viewTransition) document.documentElement.classList.remove('page-fade');
     });
   }
+  /* Drop the class once the entrance settles: the retained
+     animation transform on main.page would otherwise become the
+     containing block for position:fixed descendants */
+  setTimeout(function () {
+    document.documentElement.classList.remove('page-fade');
+  }, 1400);
 })();
 
 /* ============================================================
