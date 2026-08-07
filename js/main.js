@@ -529,3 +529,31 @@ window.addEventListener('load', function () {
 
   draw();
 });
+
+/* ── Projects: size the two-square image stack so it matches
+      the text card height exactly (squares, no stretching) ── */
+function sizeProjectStacks() {
+  const rows = document.querySelectorAll('.project-row');
+  if (!rows.length) return;
+  const mobile = window.matchMedia('(max-width: 900px)').matches;
+  for (let pass = 0; pass < 4; pass++) {
+    rows.forEach(row => {
+      const main = row.querySelector('.project-row-main');
+      const stack = row.querySelector('.project-media-stack');
+      if (!main || !stack) return;
+      if (mobile) { stack.style.width = ''; return; }
+      const gap = parseFloat(getComputedStyle(stack).gap) || 14;
+      const side = (main.offsetHeight - gap) / 2;
+      const rowW = row.offsetWidth;
+      const w = Math.min(Math.max(side, 220), 400, rowW * 0.40);
+      stack.style.width = w + 'px';
+    });
+    if (mobile) break;
+  }
+}
+window.addEventListener('DOMContentLoaded', sizeProjectStacks);
+window.addEventListener('load', sizeProjectStacks);
+window.addEventListener('resize', () => {
+  clearTimeout(window.__spsTimer);
+  window.__spsTimer = setTimeout(sizeProjectStacks, 120);
+});

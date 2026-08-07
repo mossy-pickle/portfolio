@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css?v=25" />
+  <link rel="stylesheet" href="css/style.css?v=26" />
 </head>
 <body>
 
@@ -56,10 +56,15 @@
             </a>
           </div>
           </div>
-          <figure class="project-media" data-file="capstone.jpg">
+          <div class="project-media-stack">
+            <figure class="project-media" data-file="capstone.jpg">
             <img src="assets/projects/photos/capstone.jpg" alt="Amino acid prediction project" loading="lazy"
                  onerror="this.parentElement.classList.add('empty')" />
           </figure>
+            <figure class="project-media">
+              <img src="assets/projects/photos/capstone-graph.jpg" alt="Error distribution by Phe density — capstone results" loading="lazy" />
+            </figure>
+          </div>
         </article>
 
         <!-- ── Energy forecasting ── -->
@@ -90,10 +95,15 @@
             </a>
           </div>
           </div>
-          <figure class="project-media" data-file="energy.jpg">
+          <div class="project-media-stack">
+            <figure class="project-media" data-file="energy.jpg">
             <img src="assets/projects/photos/energy.jpg" alt="Energy demand forecasting project" loading="lazy"
                  onerror="this.parentElement.classList.add('empty')" />
           </figure>
+            <figure class="project-media">
+              <img src="assets/projects/photos/energy-graph.jpg" alt="Validation MAPE per epoch — energy model results" loading="lazy" />
+            </figure>
+          </div>
         </article>
 
         <!-- ── MDS Global Maps (paper + slides) ── -->
@@ -130,10 +140,15 @@
             </a>
           </div>
           </div>
-          <figure class="project-media" data-file="mds.jpg">
+          <div class="project-media-stack">
+            <figure class="project-media" data-file="mds.jpg">
             <img src="assets/projects/photos/mds.jpg" alt="MDS global map reconstruction project" loading="lazy"
                  onerror="this.parentElement.classList.add('empty')" />
           </figure>
+            <figure class="project-media">
+              <img src="assets/projects/photos/mds-graph.jpg" alt="Stitched continent-wise MDS world reconstruction" loading="lazy" />
+            </figure>
+          </div>
         </article>
 
         <!-- ── Movie recommendations ── -->
@@ -162,10 +177,15 @@
             </a>
           </div>
           </div>
-          <figure class="project-media" data-file="movie-recs.jpg">
+          <div class="project-media-stack">
+            <figure class="project-media" data-file="movie-recs.jpg">
             <img src="assets/projects/photos/movie-recs.jpg" alt="Movie recommendation system project" loading="lazy" style="object-position:12% 50%"
                  onerror="this.parentElement.classList.add('empty')" />
           </figure>
+            <figure class="project-media">
+              <img src="assets/projects/photos/movie-recs-graph.jpg" alt="RMSE training curves across factor counts" loading="lazy" />
+            </figure>
+          </div>
         </article>
 
         <!-- ── Reading level classification ── -->
@@ -193,10 +213,15 @@
             </a>
           </div>
           </div>
-          <figure class="project-media" data-file="reading-level.jpg">
+          <div class="project-media-stack">
+            <figure class="project-media" data-file="reading-level.jpg">
             <img src="assets/projects/photos/reading-level.jpg" alt="Reading-level classification project" loading="lazy"
                  onerror="this.parentElement.classList.add('empty')" />
           </figure>
+            <figure class="project-media">
+              <img src="assets/projects/photos/reading-level-graph.jpg" alt="AUROC vs regularization strength" loading="lazy" />
+            </figure>
+          </div>
         </article>
 
       </div>
@@ -207,7 +232,7 @@
     <p>&copy; <span id="year"></span> Owen Haber.</p>
   </footer>
 
-  <script src="js/main.js?v=22"></script>
+  <script src="js/main.js?v=23"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
